@@ -1,0 +1,34 @@
+- name: Create {{docker_service}} directory
+  file:
+    path: "{{ appdata_path }}/{{docker_service}}"
+    state: directory
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+
+- name: Read {{docker_service}} compose defintion
+  include_vars:
+    file: "files/{{docker_service}}.yml"
+    name: compose
+
+- name: Install {{docker_service}} compose file
+  template:
+    src: "common_compose.yml.j2"
+    dest: "{{ appdata_path }}/{{docker_service}}/docker-compose.yml"
+    mode: "{{ docker_compose_file_mask }}"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    validate: docker-compose -f %s config
+  register: compose_file
+  become: true
+
+- name: Restart {{docker_service}}
+  when: compose_file.changed
+  shell:
+    chdir: "{{ appdata_path }}/{{docker_service}}"
+    cmd: "{{ docker_update_command }}"
+
+- name: Unset variables
+  set_fact:
+    compose_skip_globals: []

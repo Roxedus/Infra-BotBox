@@ -1,0 +1,32 @@
+ansible_become_password: "{{ secret_sudo }}"
+
+main_username: roxedus
+main_groupname: "{{ main_username }}"
+main_uid: "1000"
+main_gid: "{{ main_uid }}"
+
+package_list:
+  - name: bash-completion
+  - name: curl
+  - name: git
+  - name: htop
+  - name: iftop
+  - name: lm-sensors
+  - name: ncdu
+  - name: net-tools
+  - name: nmap
+  - name: open-vm-tools
+  - name: openssh-server
+  - name: python3
+  - name: python3-pip
+  - name: tmux
+  - name: wget
+
+ntp_timezone: "Etc/UTC"
+
+security_ssh_port: "{{ secret_ssh_port }}"
+security_ssh_password_authentication: "no"
+security_ssh_permit_root_login: "no"
+security_ssh_usedns: "no"
+security_autoupdate_enabled: true
+security_fail2ban_enabled: true

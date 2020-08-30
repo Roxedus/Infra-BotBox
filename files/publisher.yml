@@ -1,0 +1,9 @@
+version: "2.4"
+services:
+  publisher:
+    container_name: publisher
+    image: si0972/discordpublisher
+    environment:
+      - token={{ secret_bots.publisher.token }}
+      - prefixes=*
+    command: --debug

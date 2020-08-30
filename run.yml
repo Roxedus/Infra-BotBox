@@ -1,0 +1,120 @@
+- hosts: all
+  tags: [never, config]
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  pre_tasks:
+    - name: Update APT Cache
+      tags: [never, init]
+      become: true
+      apt:
+        update_cache: yes
+    - name: Add me
+      tags: [never, init]
+      user:
+        name: "{{ main_username }}"
+        uid: "{{ main_uid }}"
+        group: "{{ main_groupname }}"
+        shell: /bin/bash
+        password: "{{ secret_sudo }}"
+    - name: Add a key
+      tags: [never, init]
+      copy:
+        remote_src: yes
+        src: /root/.ssh/authorized_keys
+        dest: "/home/{{ main_username }}/.ssh/authorized_keys"
+        owner: "{{ main_username }}"
+        group: "{{ main_groupname }}"
+        mode: "0600"
+  roles:
+    - role: geerlingguy.security
+    - role: geerlingguy.ntp
+    - role: grog.package
+  tasks:
+    - name: remove ubuntu motd spam
+      become: true
+      file:
+        path: "/etc/update-motd.d/{{ item }}"
+        state: absent
+      loop:
+        - 50-landscape-sysinfo
+        - 80-livepatch
+        - 95-hwe-eol
+        - 10-help-text
+        - 50-motd-news
+      when: ansible_distribution == 'Ubuntu'
+
+- hosts: docker
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  tasks:
+    - pip:
+        name: docker
+    - pip:
+        name: docker-compose
+  roles:
+    - role: geerlingguy.docker
+      tags: [never, config]
+    - role: dock-generator
+      vars:
+        docker_service: "ouro"
+        compose_skip_globals: ["volumes"]
+
+- hosts: edge
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  roles:
+    - role: dock-generator
+      vars:
+        docker_service: cfddns
+        compose_skip_globals: ["volumes"]
+    - role: dock-generator
+      vars:
+        docker_service: swag
+    - role: swag
+
+- hosts: bots
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  roles:
+    - role: dock-generator
+      vars:
+        docker_service: rclone
+        compose_skip_globals: ["labels"]
+    - role: rclone
+    - role: scripts
+
+- hosts: bots
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  tags: [bots, my_bots]
+  tasks:
+    - name: My bots
+      include_role:
+        name: dock-generator
+      vars:
+        docker_service: "{{ item }}"
+        compose_skip_globals: ["volumes"]
+      with_items:
+        - publisher
+        - progbott
+
+- hosts: bots
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  tags: [bots, red_bots]
+  tasks:
+    - name: RedBots
+      include_role:
+        name: dock-generator
+      vars:
+        docker_service: "{{ item }}"
+        compose_skip_globals: ["volumes"]
+      loop:
+        - unraider
+        - hawkbot

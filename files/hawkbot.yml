@@ -1,0 +1,30 @@
+version: "2.4"
+services:
+  hawkbot:
+    container_name: hawkbot
+    image: phasecorex/red-discordbot:full
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/data"
+    environment:
+      - PREFIX=-
+      - TOKEN={{ secret_bots.hawkbot.token }}
+      - STORAGE_TYPE=postgres
+      - PGDATABASE=hawkbot
+      - PGHOST=postgres
+      - PGPASSWORD={{ secret_bots.hawkbot.pg_pass }}
+      - PGUSER=hawkbot
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_PASSWORD={{ secret_bots.hawkbot.pg_pass }}
+      - POSTGRES_USER=hawkbot
+
+networks:
+  default:
+    external:
+      name: hawkbot

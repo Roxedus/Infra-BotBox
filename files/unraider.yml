@@ -1,0 +1,10 @@
+version: "2.4"
+services:
+  unraider:
+    container_name: unraider
+    image: phasecorex/red-discordbot:full
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/data:/data"
+    environment:
+      - PREFIX=.
+      - TOKEN={{ secret_bots.unraider.token }}

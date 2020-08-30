@@ -1,0 +1,31 @@
+pip_install_packages:
+    - name: docker
+    - name: docker-compose
+
+docker_install_compose: false
+docker_users:
+    - "{{ main_username }}"
+
+appdata_path: /opt/appdata
+backup_path: /opt/to_cloud
+
+compose_globals:
+    services:
+        environment:
+            - "PUID={{ main_uid }}"
+            - "PGID={{ main_gid }}"
+            - "TZ={{ ntp_timezone }}"
+        volumes:
+            - "{{ appdata_path }}/{{ docker_service }}/config:/config"
+        restart: on-failure:3
+        labels:
+            - "ansible.managed=true"
+    networks:
+        default:
+            external:
+                name: intranet
+
+docker_update_command: docker-compose down --remove-orphans && docker-compose rm && docker-compose pull && docker-compose -p {{ docker_service }} up -d
+
+docker_compose_file_mask: 0664
+docker_compose_directory_mask: 0775

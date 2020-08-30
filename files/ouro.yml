@@ -1,0 +1,15 @@
+version: "2.4"
+services:
+  ouro:
+    container_name: ouro
+    hostname: ouroboros - BotBox
+    image: pyouroboros/ouroboros
+    environment:
+      - IGNORE="rss-bot rss-web"
+      - CLEANUP=true
+      - INTERVAL=300
+      - LOG_LEVEL=info
+      - SELF_UPDATE=true
+      - NOTIFIERS="discord://{{ secret_discord_webook }}?avatar_url=https%3A%2F%2Fi.dlpng.com%2Fstatic%2Fpng%2F6846383_preview.png"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

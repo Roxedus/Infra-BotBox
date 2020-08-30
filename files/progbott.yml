@@ -1,0 +1,8 @@
+version: "2.4"
+services:
+  progbott:
+    container_name: progbott
+    image: roxedus/progbott:latest
+    volumes:
+      - "{{ appdata_path }}/progbott/data:/data"
+    command: --debug
