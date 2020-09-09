@@ -99,6 +99,7 @@
       with_items:
         - publisher
         - progbott
+        - shite
 
 - hosts: bots
   become: yes
