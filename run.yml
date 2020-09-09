@@ -60,6 +60,34 @@
       vars:
         docker_service: "ouro"
 
+- hosts: docker
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  pre_tasks:
+    - name: Set Default logging
+      tags: [never, init, logging]
+      become: true
+      register: docker_deamon
+      copy:
+        dest: /etc/docker/daemon.json
+        owner: "root"
+        group: "root"
+        content: |
+          {
+            "log-driver": "journald",
+            "log-opts": {
+              "mode": "non-blocking"
+            }
+          }
+        mode: "0600"
+    - name: Restart servive to apply changes
+      tags: [never, init, logging]
+      become: true
+      when: docker_deamon.changed
+      service:
+        name: docker
+        state: restarted
 
 - hosts: edge
   become: yes
