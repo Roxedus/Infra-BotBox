@@ -57,6 +57,7 @@
     - role: geerlingguy.docker
       tags: [never, config]
     - role: dock-generator
+      tags: [init]
       vars:
         docker_service: "ouro"
 
