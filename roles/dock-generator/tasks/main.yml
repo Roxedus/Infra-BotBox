@@ -28,7 +28,3 @@
   shell:
     chdir: "{{ appdata_path }}/{{docker_service}}"
     cmd: "{{ docker_update_command }}"
-
-- name: Unset variables
-  set_fact:
-    compose_skip_globals: []

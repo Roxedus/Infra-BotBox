@@ -59,7 +59,7 @@
     - role: dock-generator
       vars:
         docker_service: "ouro"
-        compose_skip_globals: ["volumes"]
+
 
 - hosts: edge
   become: yes
@@ -69,7 +69,6 @@
     - role: dock-generator
       vars:
         docker_service: cfddns
-        compose_skip_globals: ["volumes"]
     - role: dock-generator
       vars:
         docker_service: swag
@@ -83,7 +82,6 @@
     - role: dock-generator
       vars:
         docker_service: rclone
-        compose_skip_globals: ["labels"]
     - role: rclone
     - role: scripts
 
@@ -98,7 +96,6 @@
         name: dock-generator
       vars:
         docker_service: "{{ item }}"
-        compose_skip_globals: ["volumes"]
       with_items:
         - publisher
         - progbott
@@ -114,7 +111,6 @@
         name: dock-generator
       vars:
         docker_service: "{{ item }}"
-        compose_skip_globals: ["volumes"]
       loop:
         - unraider
         - hawkbot

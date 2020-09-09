@@ -1,4 +1,3 @@
 ---
 docker_service: {}
 docker_update_command: docker-compose down --remove-orphans && docker-compose rm && docker-compose pull && docker-compose -p {{ docker_service }} up -d
-compose_skip_globals: []

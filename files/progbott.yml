@@ -1,4 +1,6 @@
 version: "2.4"
+_skip_globals: ["volumes"]
+
 services:
   progbott:
     container_name: progbott

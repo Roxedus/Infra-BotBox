@@ -7,9 +7,9 @@ services:
 
 {%- set filtered={} -%}
 
-{%- if compose_skip_globals is defined -%}
+{%- if compose._skip_globals is defined -%}
 {%- for k, v in compose_globals["services"].items() -%}
-{%- set x=(filtered.__setitem__(k, v) if filtered is defined else {k:v}) if k not in compose_skip_globals -%}
+{%- set x=(filtered.__setitem__(k, v) if filtered is defined else {k:v}) if k not in compose._skip_globals -%}
 {%- endfor -%}
 {%- endif -%}
 
@@ -32,7 +32,7 @@ services:
 
 {%- for component in lists %}
     {{ component }}:
-{% for item in (definition[component] | default([]) + (compose_globals["services"][component] if compose_skip_globals is defined and component not in compose_skip_globals or compose_skip_globals is not defined) | default([])) %}
+{% for item in (definition[component] | default([]) + (compose_globals["services"][component] if compose._skip_globals is defined and component not in compose._skip_globals or compose._skip_globals is not defined) | default([])) %}
       - {{ item | replace("[service_name]", service) }}
 {% endfor -%}
 {%- endfor -%}
