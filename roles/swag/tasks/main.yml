@@ -10,6 +10,19 @@
   with_fileglob:
     - confs/*
 
+- name: Enable confs
+  copy:
+    src: "{{ appdata_path }}/swag/config/nginx/proxy-confs/{{ item }}.conf.sample"
+    remote_src: yes
+    dest: "{{ appdata_path }}/swag/config/nginx/proxy-confs/{{ item }}.conf"
+    mode: "0664" # To prevent unnessecary restart after the container has done its chmod
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+  become: true
+  register: enabled
+  loop:
+    - grafana.subdomain
+
 - name: Check dns file
   stat:
     path: "{{ appdata_path }}/swag/config/dns-conf/cloudflare.ini"
@@ -25,7 +38,7 @@
   become: true
 
 - name: Restart swag
-  when: confs.changed or cf_ini.changed
+  when: confs.changed or cf_ini.changed or enabled.changed
   shell:
     chdir: "{{ appdata_path }}/swag"
     cmd: "{{ docker_update_command }}"
