@@ -18,7 +18,7 @@ compose_globals:
             - "TZ={{ ntp_timezone }}"
         volumes:
             - "{{ appdata_path }}/{{ docker_service }}/config:/config"
-        restart: on-failure:3
+        restart: unless-stopped
         labels:
             - "ansible.managed=true"
     networks:
