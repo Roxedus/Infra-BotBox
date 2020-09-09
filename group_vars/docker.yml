@@ -11,6 +11,7 @@ backup_path: /opt/to_cloud
 
 compose_globals:
     services:
+        hostname: "{{ inventory_hostname }}"
         environment:
             - "PUID={{ main_uid }}"
             - "PGID={{ main_gid }}"
