@@ -88,6 +88,14 @@
       service:
         name: docker
         state: restarted
+  roles:
+    - role: dock-generator
+      tags: [init, logging]
+      vars:
+        LOKI_VER: 1.6.1
+        docker_service: "grafana"
+    - role: logging
+      tags: [init, logging]
 
 - hosts: edge
   become: yes

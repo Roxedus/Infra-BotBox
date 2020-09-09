@@ -1,0 +1,53 @@
+_skip_globals: ["volumes"]
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    user: "1000:1000"
+    networks:
+      - rp-net
+      - default
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_NAME=BotBox
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-worldmap-panel,grafana-piechart-panel
+      - GF_LOG_MODE=console file # f2b things
+      - GF_LOG_FILE_LEVEL=error # f2b things
+      - GF_LOG_CONSOLE_LEVEL=info # f2b things
+      - GF_SECURITY_ADMIN_USER=Roxedus
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_SECURITY_COOKIE_SECURE=true
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/logs:/var/log/grafana"
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/grafana"
+
+  loki:
+    image: grafana/loki:{{ LOKI_VER }}
+    container_name: loki
+    volumes:
+      #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/inxex:/loki/index"
+      #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/chunks:/loki/chunks"
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/config:/config:ro"
+    command: -config.file=/config/loki-config.yaml
+
+  promtail:
+    image: grafana/promtail:{{ LOKI_VER }}
+    container_name: promtail
+    depends_on:
+      - loki
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/config:/config:ro"
+      - "{{ appdata_path }}:{{ appdata_path }}:ro"
+      - /var/log:/var/log:ro # journal things
+      - /etc/machine-id:/etc/machine-id:ro # journal things
+    command: -config.file=/config/promtail-config.yaml
+
+networks:
+  default:
+    external:
+      name: grafana
+  rp-net:
+    external:
+      name: intranet

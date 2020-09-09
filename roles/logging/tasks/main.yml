@@ -1,0 +1,35 @@
+- name: Chown directories
+  file:
+    path: "{{ appdata_path }}/grafana/{{ item }}"
+    state: directory
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+  loop:
+    - loki
+    - promtail
+
+- name: Move loki config
+  copy:
+    src: "files/loki-config.yaml"
+    dest: "{{ appdata_path }}/grafana/loki/config/loki-config.yaml"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  register: loki_conf
+
+- name: Move promtail config
+  copy:
+    src: "files/promtail-config.yaml"
+    dest: "{{ appdata_path }}/grafana/promtail/config/promtail-config.yaml"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  register: promtail_conf
+
+- name: Restart logging
+  when: loki_conf.changed or promtail_conf.changed
+  shell:
+    chdir: "{{ appdata_path }}/grafana"
+    cmd: "{{ docker_update_command }}"
