@@ -5,7 +5,7 @@ backup_dir="/opt/to_cloud"
 
 exclude=("rclone")
 declare -A tar_flags
-tar_flags=(["hawkbot"]="--exclude=**/venv/**" ["swag"]="--exclude=**.sample --exclude=**/geoip2db/**" ["unraider"]="--exclude=**/venv/**")
+tar_flags=(["hawkbot"]="--exclude=**/venv/**" ["swag"]="--exclude=**.sample --exclude=**/geoip2db/** --exclude=**/dns-conf/**" ["unraider"]="--exclude=**/venv/**" ["grafana"]="--exclude=**/plugins/**")
 
 function update() {
 
