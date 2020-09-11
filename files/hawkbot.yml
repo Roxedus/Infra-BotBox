@@ -20,8 +20,10 @@ services:
   postgres:
     container_name: postgres
     image: postgres
+    user: "1000:1000"
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/postgresql/data"
+      - "/etc/passwd:/etc/passwd:ro"
     environment:
       - POSTGRES_PASSWORD={{ secret_bots.hawkbot.pg_pass }}
       - POSTGRES_USER=hawkbot
