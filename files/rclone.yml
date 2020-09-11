@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["lables"]
+_skip_globals: ["lables", "restart"]
 
 services:
   rclone:
@@ -9,4 +9,4 @@ services:
     environment:
       - RCLONE_CONFIG=/config/rclone.conf
     volumes:
-      - "{{ backup_path }}={{ backup_path }}"
+      - "{{ backup_path }}:{{ backup_path }}"

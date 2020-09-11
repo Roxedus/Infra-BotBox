@@ -1,4 +1,10 @@
+- name: Check config file
+  stat:
+    path: "{{ appdata_path }}/rclone/config/rclone.conf"
+  register: rclone_conf
+
 - name: Install rclone config file
+  when: not rclone_conf.stat.exists
   template:
     src: "rclone.conf"
     dest: "{{ appdata_path }}/rclone/config/rclone.conf"
