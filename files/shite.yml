@@ -14,13 +14,13 @@ services:
   lavalink:
     container_name: lavalink
     image: fredboat/lavalink:master
-    mem_limit: 300mb # Pesky Java app
+    mem_limit: 800mb # Pesky Java app
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/application.yml:/opt/Lavalink/application.yml"
   lavalink_dev:
     container_name: lavalink_dev
     image: fredboat/lavalink:dev
-    mem_limit: 300mb # Pesky Java app
+    mem_limit: 800mb # Pesky Java app
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/application.yml:/opt/Lavalink/application.yml"
 
