@@ -59,7 +59,7 @@
     - role: dock-generator
       tags: [init]
       vars:
-        docker_service: "ouro"
+        docker_service: "diun"
 
 - hosts: docker
   become: yes
