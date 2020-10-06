@@ -4,7 +4,7 @@ _skip_globals: ["volumes"]
 services:
   cfddns:
     container_name: cfddns
-    image: hotio/cloudflare-ddns
+    image: ghcr.io/hotio/cloudflare-ddns
     environment:
       - CF_USER={{ secret_cloudflare.email }}
       - CF_APITOKEN={{ secret_cloudflare[DOMAIN].apikey }}

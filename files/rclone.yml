@@ -5,7 +5,7 @@ services:
   rclone:
     container_name: rclone
     restart: no
-    image: hotio/rclone
+    image: ghcr.io/hotio/rclone
     environment:
       - RCLONE_CONFIG=/config/rclone.conf
     volumes:
