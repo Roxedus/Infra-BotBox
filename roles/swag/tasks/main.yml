@@ -20,8 +20,16 @@
     group: "{{ main_groupname }}"
   become: true
   register: enabled
-  loop:
-    - grafana.subdomain
+  with_items:
+    - "{{ enabled_confs }}"
+
+- name: Disable confs
+  file:
+    dest: "{{ appdata_path }}/swag/config/nginx/proxy-confs/{{ item }}.conf"
+    state: absent
+  register: disabled
+  with_items:
+    - "{{ disabled_confs }}"
 
 - name: Check dns file
   stat:
@@ -38,7 +46,7 @@
   become: true
 
 - name: Restart swag
-  when: confs.changed or cf_ini.changed or enabled.changed
+  when: confs.changed or cf_ini.changed or enabled.changed or disabled.changed
   shell:
     chdir: "{{ appdata_path }}/swag"
-    cmd: "{{ docker_update_command }}"
+    cmd: "docker-compose down --remove-orphans && docker-compose rm && docker-compose pull && docker-compose -p swag up -d"

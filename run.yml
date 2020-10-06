@@ -102,14 +102,21 @@
   become: yes
   vars_files:
     - "vars/vault.yaml"
+  tasks:
+    - name: Edge containers
+      include_role:
+        name: dock-generator
+      vars:
+        docker_service: "{{ item }}"
+      with_items:
+        - cfddns
+        - swag
   roles:
-    - role: dock-generator
-      vars:
-        docker_service: cfddns
-    - role: dock-generator
-      vars:
-        docker_service: swag
     - role: swag
+      enabled_confs:
+        - grafana.subdomain
+      disabled_confs:
+        - adminer.subdomain
 
 - hosts: bots
   become: yes
