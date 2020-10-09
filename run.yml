@@ -159,3 +159,17 @@
       loop:
         - unraider
         - hawkbot
+
+- hosts: bots
+  become: yes
+  vars_files:
+    - "vars/vault.yaml"
+  tags: [containers]
+  tasks:
+    - name: Containers
+      include_role:
+        name: dock-generator
+      vars:
+        docker_service: "{{ item }}"
+      loop:
+        - monitorrs

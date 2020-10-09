@@ -1,0 +1,64 @@
+version: "2.4"
+_skip_globals: ["volumes"]
+
+services:
+  monitorrs:
+    container_name: rss-bot
+    image: synzen/monitorss
+    depends_on:
+      - mongodb
+    environment:
+      - DRSS_BOT_OWNERIDS=120970603556503552
+      - DRSS_BOT_PREFIX=\
+      - DRSS_BOT_TOKEN={{ secret_bots.rss.token }}
+      - DRSS_DATABASE_URI=mongodb://mongodb_rss:27017/drss
+      - DRSS_FEEDS_REFRESHRATEMINUTES=5
+      - DRSS_START=bot
+      - DRSS_FEEDS_SENDOLDONFIRSTCYCLE=true
+      - DRSS_FEEDS_SENDFIRSTCYCLE=true
+      - DRSS_LOG_LEVEL=debug
+    networks:
+      - default
+      - rp-net
+  drss-web:
+    container_name: rss_web
+    image: synzen/monitorss
+    depends_on:
+      - mongodb
+      - redis
+      - monitorrs
+    environment:
+      - DRSS_START=web
+      - DRSSWEB_BOT_CLIENTID={{ secret_bots.rss.client_id }}
+      - DRSSWEB_BOT_CLIENTSECRET={{ secret_bots.rss.client_secret }}
+      - DRSSWEB_BOT_REDIRECTURI=https://rss.roxedus.net/authorize
+      - DRSSWEB_BOT_TOKEN={{ secret_bots.rss.token }}
+      - DRSSWEB_DATABASE_REDIS=redis://redis:6379
+      - DRSSWEB_DATABASE_URI=mongodb://mongodb_rss:27017/drss
+      - DRSSWEB_HTTP_PORT=8080
+    networks:
+      - default
+      - rp-net
+  redis:
+    container_name: redis
+    image: redis:alpine
+    user: "1000:1000"
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data"
+      - "/etc/passwd:/etc/passwd:ro"
+  mongodb:
+    container_name: mongodb_rss
+    image: mongo
+    user: "1000:1000"
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data/db"
+      - "/etc/passwd:/etc/passwd:ro"
+
+
+networks:
+  default:
+    external:
+      name: rss
+  rp-net:
+    external:
+      name: intranet
