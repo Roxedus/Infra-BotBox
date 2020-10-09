@@ -1,0 +1,24 @@
+- name: Move update script
+  register: update
+  copy:
+    src: "update.sh"
+    dest: "{{ appdata_path }}/webhook/config/update.sh"
+    mode: "0751"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+
+
+- name: Create hooks file
+  register: hooks
+  template:
+    src: "hooks.json"
+    dest: "{{ appdata_path }}/webhook/config/hooks/hooks.json"
+    mode: "{{ docker_compose_file_mask }}"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+
+- name: Restart webhook
+  when: hooks.changed or update.changed
+  shell:
+    chdir: "{{ appdata_path }}/webhook"
+    cmd: "docker-compose down --remove-orphans && docker-compose rm && docker-compose pull && docker-compose -p swag up -d"

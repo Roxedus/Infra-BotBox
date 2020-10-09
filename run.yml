@@ -111,6 +111,7 @@
       with_items:
         - cfddns
         - swag
+        - webhook
   roles:
     - role: swag
       tags: [swag]
@@ -176,3 +177,9 @@
         - monitorrs
         - huginn
         - xbb
+        - webhook
+    - name: Post containers
+      include_role:
+        name: "{{ item }}"
+      loop:
+        - webhook

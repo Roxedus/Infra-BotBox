@@ -1,0 +1,19 @@
+[
+  {
+    "id": "update-progbott",
+    "execute-command": "/config/update.sh",
+    "command-working-directory": "{{ appdata_path }}/progbott",
+    "response-message": "Compose comming up!",
+    "trigger-rule-mismatch-http-response-code": 420,
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "{{ secret_hook.progbot.token }}",
+        "parameter": {
+          "source": "header",
+          "name": "{{ secret_hook.progbot.name }}"
+        }
+      }
+    }
+  }
+]
