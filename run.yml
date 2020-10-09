@@ -173,3 +173,4 @@
         docker_service: "{{ item }}"
       loop:
         - monitorrs
+        - huginn

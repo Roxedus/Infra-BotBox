@@ -1,0 +1,44 @@
+version: "2.4"
+_skip_globals: ["volumes"]
+
+services:
+  huginn:
+    container_name: huginn
+    image: huginn/huginn
+    depends_on:
+      - mariadb
+    environment:
+      - SMTP_SERVER={{ secret_huginn.smtp.server }}
+      - SMTP_PORT={{ secret_huginn.smtp.port }}
+      - SMTP_USER_NAME={{ secret_huginn.smtp.username }}
+      - SMTP_PASSWORD={{ secret_huginn.smtp.password }}
+      - SMTP_AUTHENTICATION=plain
+      - SMTP_ENABLE_STARTTLS_AUTO=true
+      - SEND_EMAIL_IN_DEVELOPMENT=true
+      - HUGINN_DATABASE_NAME={{ secret_huginn.db.name }}
+      - HUGINN_DATABASE_USERNAME={{ secret_huginn.db.username }}
+      - HUGINN_DATABASE_PASSWORD={{ secret_huginn.db.password }}
+      - HUGINN_DATABASE_HOST=mariadb
+      - HUGINN_DATABASE_PORT=3306
+    networks:
+      - default
+      - rp-net
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ secret_sudo }}
+      - MYSQL_DATABASE={{ secret_huginn.db.name }} #optional
+      - MYSQL_USER={{ secret_huginn.db.username }} #optional
+      - MYSQL_PASSWORD={{ secret_huginn.db.password }} #optional
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/config"
+
+
+networks:
+  default:
+    external:
+      name: huginn
+  rp-net:
+    external:
+      name: intranet
