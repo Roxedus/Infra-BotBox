@@ -4,7 +4,7 @@ _skip_globals: ["volumes"]
 services:
   unraider:
     container_name: unraider
-    image: phasecorex/red-discordbot:full
+    image: ghcr.io/phasecorex/red-discordbot:full
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/data:/data"
     environment:

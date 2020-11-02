@@ -4,7 +4,7 @@ _skip_globals: ["volumes"]
 services:
   hawkbot:
     container_name: hawkbot
-    image: phasecorex/red-discordbot:full
+    image: ghcr.io/phasecorex/red-discordbot:full
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/data"
     environment:

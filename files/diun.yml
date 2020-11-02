@@ -3,7 +3,7 @@ _skip_globals: ["volumes"]
 
 services:
   diun:
-    image: crazymax/diun:latest
+    image: ghcr.io/crazy-max/diun:latest
     container_name: diun
     user: "1000:998"
     environment:

@@ -2,7 +2,7 @@ version: "2.4"
 services:
   swag:
     container_name: swag
-    image: linuxserver/swag
+    image: ghcr.io/linuxserver/swag
     environment:
       - EMAIL={{ secret_cloudflare.email }}
       - URL={{ DOMAIN }}
