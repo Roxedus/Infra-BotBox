@@ -20,7 +20,7 @@ services:
     networks:
       - default
       - rp-net
-  drss-web:
+  rss:
     container_name: rss_web
     image: synzen/monitorss
     depends_on:
@@ -39,6 +39,10 @@ services:
     networks:
       - default
       - rp-net
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.rss.entrypoints=web-secure
+      - traefik.http.services.rss.loadbalancer.server.port=8080
   redis:
     container_name: redis
     image: redis:alpine

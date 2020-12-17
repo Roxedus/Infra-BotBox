@@ -138,7 +138,7 @@
         docker_service: "{{ item }}"
       with_items:
         - publisher
-        - progbott
+        - progbot
         - shite
 
 - hosts: bots

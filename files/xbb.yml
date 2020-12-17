@@ -9,3 +9,7 @@ services:
       - "XBB_NAME=Roxedus\\\\'s images"
       - "DOCKER_MODS=roxedus/lsio-docker-mods:nginx-xbackbone-latest"
       - "MAXMINDDB_LICENSE_KEY={{ secret_cloudflare.maxmind }}"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.xbb.entrypoints=web-secure
+      - "traefik.http.routers.xbb.rule=Host(`images.{{ DOMAIN }}`) || Host(`img.{{ DOMAIN }}`)"

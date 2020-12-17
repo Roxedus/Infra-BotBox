@@ -20,6 +20,9 @@ services:
       - HUGINN_DATABASE_PASSWORD={{ secret_huginn.db.password }}
       - HUGINN_DATABASE_HOST=mariadb
       - HUGINN_DATABASE_PORT=3306
+    labels:
+          - traefik.enable=true
+          - traefik.http.routers.huginn.entrypoints=web-secure
     networks:
       - default
       - rp-net

@@ -1,0 +1,14 @@
+version: "2.4"
+_skip_globals: ["volumes"]
+
+services:
+  progbot:
+    container_name: progbott
+    image: roxedus/progbott:latest
+    volumes:
+      - "{{ appdata_path }}/progbot/data:/data"
+    command: --debug
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.progbot.entrypoints=web-secure
+      - traefik.http.services.progbot.loadbalancer.server.port=5000

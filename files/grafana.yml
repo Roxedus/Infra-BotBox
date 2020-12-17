@@ -22,7 +22,9 @@ services:
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/logs:/var/log/grafana"
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/grafana"
-
+    labels:
+          - traefik.enable=true
+          - traefik.http.routers.grafana.entrypoints=web-secure
   loki:
     image: grafana/loki:{{ LOKI_VER }}
     container_name: loki
