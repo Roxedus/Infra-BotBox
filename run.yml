@@ -110,15 +110,9 @@
         docker_service: "{{ item }}"
       with_items:
         - cfddns
-        - swag
-        - webhook
+        - traefik
   roles:
-    - role: swag
-      tags: [swag]
-      enabled_confs:
-        - grafana.subdomain
-      disabled_confs:
-        - adminer.subdomain
+    - role: traefik
 
 - hosts: bots
   become: yes

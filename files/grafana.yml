@@ -44,6 +44,20 @@ services:
       - /etc/machine-id:/etc/machine-id:ro # journal things
     command: -config.file=/config/promtail-config.yaml
 
+  influx:
+    image: influxdb:1.8
+    container_name: influx
+    user: "1000:1000"
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/influxdb"
+    environment:
+      - "INFLUXDB_ADMIN_PASSWORD={{ secret_sudo }}"
+      - INFLUXDB_UDP_ENABLED=true
+      - INFLUXDB_UDP_DATABASE=traefik
+    networks:
+      - rp-net
+      - default
+
 networks:
   default:
     external:

@@ -1,0 +1,18 @@
+version: "2.4"
+_skip_globals: ["volumes"]
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.3
+    environment:
+      - CF_DNS_API_TOKEN={{ secret_cloudflare[DOMAIN].apikey }}
+      - TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_EMAIL={{ secret_cloudflare.email }}
+    ports:
+     - 80:80
+     - 3443:3443
+     - 443:443
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/config:/etc/traefik"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped

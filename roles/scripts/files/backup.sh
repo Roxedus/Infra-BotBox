@@ -3,7 +3,7 @@
 appdata_dir="/opt/appdata"
 backup_dir="/opt/to_cloud"
 
-exclude=("rclone")
+exclude=("rclone traefik")
 declare -A tar_flags
 tar_flags=(["hawkbot"]="--exclude=**/venv/**" ["swag"]="--exclude=**.sample --exclude=**/geoip2db/** --exclude=**/dns-conf/**" ["unraider"]="--exclude=**/venv/**" ["grafana"]="--exclude=**/plugins/**")
 
