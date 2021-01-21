@@ -1,3 +1,10 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "yaml.schemas": {
+        "Kubernetes configuration": "**/k*/**.yml",
+        "https://json.schemastore.org/ansible-role-2.9": ["roles/**/tasks/**.yml", "roles/**/tasks/**.yaml"],
+        "https://json.schemastore.org/ansible-playbook": ["run.yml", "run.yaml"],
+        "https://json.schemastore.org/github-workflow": [".github/worflows/**.yml", ".github/worflows/**.yaml"],
+        "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "files/**.yml"
+    }
 }

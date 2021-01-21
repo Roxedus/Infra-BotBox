@@ -1,0 +1,12 @@
+version: "2.4"
+
+services:
+  org:
+    container_name: organizr
+    image: ghcr.io/organizr/organizr
+    environment:
+      - fpm=true
+      - branch=dev
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.org.entrypoints=web-secure

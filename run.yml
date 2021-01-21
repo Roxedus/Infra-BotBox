@@ -109,6 +109,7 @@
       vars:
         docker_service: "{{ item }}"
       with_items:
+        - organizr
         - cfddns
         - traefik
   roles:
@@ -171,9 +172,9 @@
         - monitorrs
         - huginn
         - xbb
-        - webhook
-    - name: Post containers
-      include_role:
-        name: "{{ item }}"
-      loop:
-        - webhook
+    #    - webhook
+    # - name: Post containers
+    #   include_role:
+    #     name: "{{ item }}"
+    #   loop:
+    #     - webhook

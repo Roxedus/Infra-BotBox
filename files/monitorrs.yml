@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: ["volumes", "restart"]
 
 services:
   monitorrs:
@@ -43,6 +43,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.rss.entrypoints=web-secure
       - traefik.http.services.rss.loadbalancer.server.port=8080
+      - traefik.http.routers.rss.middlewares=org-admin@file
   redis:
     container_name: redis
     image: redis:alpine
@@ -57,7 +58,6 @@ services:
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data/db"
       - "/etc/passwd:/etc/passwd:ro"
-
 
 networks:
   default:

@@ -12,3 +12,8 @@ http:
         sourceRange: "{{ HomeIp }}"
     gzip:
       compress: {}
+    org-admin:
+      forwardauth:
+        address: https://org.roxedus.net/api/v2/auth?group=1
+        # trustForwardHeader: true
+        # authresponseheaders: Remote-User, Remote-Groups
