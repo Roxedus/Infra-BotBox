@@ -13,10 +13,10 @@ services:
       - DRSS_BOT_TOKEN={{ secret_bots.rss.token }}
       - DRSS_DATABASE_URI=mongodb://mongodb_rss:27017/drss
       - DRSS_FEEDS_REFRESHRATEMINUTES=5
-      - DRSS_START=bot
-      - DRSS_FEEDS_SENDOLDONFIRSTCYCLE=true
       - DRSS_FEEDS_SENDFIRSTCYCLE=true
+      - DRSS_FEEDS_SENDOLDONFIRSTCYCLE=true
       - DRSS_LOG_LEVEL=debug
+      - DRSS_START=bot
     networks:
       - default
       - rp-net
@@ -29,6 +29,7 @@ services:
       - monitorrs
     environment:
       - DRSS_START=web
+      - DRSSWEB_LOG_LEVEL=debug
       - DRSSWEB_BOT_CLIENTID={{ secret_bots.rss.client_id }}
       - DRSSWEB_BOT_CLIENTSECRET={{ secret_bots.rss.client_secret }}
       - DRSSWEB_BOT_REDIRECTURI=https://rss.roxedus.net/authorize
@@ -36,6 +37,7 @@ services:
       - DRSSWEB_DATABASE_REDIS=redis://redis:6379
       - DRSSWEB_DATABASE_URI=mongodb://mongodb_rss:27017/drss
       - DRSSWEB_HTTP_PORT=8080
+      - DRSSWEB_TRUSTPROXY_PORT=True
     networks:
       - default
       - rp-net
@@ -43,7 +45,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.rss.entrypoints=web-secure
       - traefik.http.services.rss.loadbalancer.server.port=8080
-      - traefik.http.routers.rss.middlewares=org-admin@file
+  #      - traefik.http.routers.rss.middlewares=org-admin@file
   redis:
     container_name: redis
     image: redis:alpine

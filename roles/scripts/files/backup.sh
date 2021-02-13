@@ -41,7 +41,7 @@ function upload() {
     rclone="docker-compose -f ${appdata_dir}/rclone/docker-compose.yml run --rm rclone -v"
 
     for comp in "${backup_dir}"/*.tar.gz; do
-        ${rclone} move "${comp}" union:BotBox/"$(date --utc +%Y-%m-%d_%H)"/
+        ${rclone} move "${comp}" rost:BotBox/"$(date --utc +%Y-%m-%d_%H)"/
     done
 
 }
