@@ -21,6 +21,10 @@ compose_globals:
         restart: unless-stopped
         labels:
             - "ansible.managed=true"
+            - "org.hotio.pullio.bb.notify=true"
+            - "org.hotio.pullio.bb.update=true"
+            - "org.hotio.pullio.bb.script.update=bash /opt/scripts/backup pullio"
+            - "org.hotio.pullio.bb.discord.webhook=https://discord.com/api/webhooks/{{ secret_discord_webook }}"
     networks:
         default:
             external:

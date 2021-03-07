@@ -36,6 +36,19 @@ function update() {
 
 }
 
+function pullio() {
+
+    fldr="$(basename "$PULLIO_COMPOSE_WORKDIR")"
+    echo "$fldr: Backing up container..."
+    if [[ "${exclude[*]}" =~ ${fldr} ]]; then return; fi
+    tarflags="-C ${appdata_dir}/"
+    if [[ "${!tar_flags[*]}" =~ ${fldr} ]]; then tarflags="${tarflags} ${tar_flags[${fldr}]}"; fi
+    echo -n "$PULLIO_OLD_VERSION" > "${appdata_dir}/${fldr}/opencontainer.txt"
+    # shellcheck disable=SC2086
+    tar ${tarflags} -cvzf "${backup_dir}/${fldr}.tar.gz" "${fldr}"
+
+}
+
 function upload() {
 
     rclone="docker-compose -f ${appdata_dir}/rclone/docker-compose.yml run --rm rclone -v"
@@ -50,6 +63,6 @@ function upload() {
 if declare -f "$1" >/dev/null; then
     "$@"
 else
-    echo "The only valid arguments are update and upload"
+    echo "The only valid arguments are update, upload and pullio"
     exit 1
 fi

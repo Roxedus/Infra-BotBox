@@ -24,6 +24,26 @@
     group: "{{ main_groupname }}"
   become: true
 
+- name: Download docker-compose wrapper
+  become: true
+  get_url:
+    url: https://raw.githubusercontent.com/linuxserver/docker-docker-compose/master/run.sh
+    dest: /usr/local/bin/docker-compose
+    mode: "0744"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    force: "yes"
+
+- name: Download pullio
+  become: true
+  get_url:
+    url: https://raw.githubusercontent.com/hotio/pullio/master/pullio.sh
+    dest: /usr/local/bin/pullio
+    mode: "0744"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    force: "yes"
+
 - name: Move scripts
   copy:
     src: "{{ item }}"
@@ -34,3 +54,10 @@
   become: true
   loop:
     - backup.sh
+
+- name: Adds cron entry for pullio
+  ansible.builtin.cron:
+    name: "pullio daily"
+    minute: "0"
+    hour: "12"
+    job: "pullio --tag bb > /dev/null"

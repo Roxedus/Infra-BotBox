@@ -49,17 +49,14 @@
   vars_files:
     - "vars/vault.yaml"
   tasks:
-    - pip:
+    - name: Install docker pip
+      pip:
         name: docker
-    - pip:
-        name: docker-compose
   roles:
     - role: geerlingguy.docker
       tags: [never, config]
-    - role: dock-generator
-      tags: [init]
-      vars:
-        docker_service: "diun"
+    - role: scripts
+      tags: [never, config, scripts]
 
 - hosts: docker
   become: yes
@@ -124,7 +121,6 @@
       vars:
         docker_service: rclone
     - role: rclone
-    - role: scripts
 
 - hosts: bots
   become: yes
