@@ -7,9 +7,16 @@ http:
       service: api@internal
 
   middlewares:
+    subfilter-grafana:
+      plugin:
+        subfilter:
+          lastModified: true
+          filters:
+            regex: "</head>"
+            replacement: '<link rel="stylesheet" type="text/css" href="https://gilbn.github.io/theme.park/CSS/themes/grafana/plex.css"></head>'
     home-block:
       ipWhiteList:
-        sourceRange: "{{ HomeIp }}"
+        sourceRange: "{{ secret_traefik.homeIp }}"
     gzip:
       compress: {}
     org-admin:

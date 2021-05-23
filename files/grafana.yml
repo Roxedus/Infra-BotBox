@@ -26,6 +26,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.grafana.entrypoints=web-secure
       - traefik.http.routers.grafana.middlewares=org-admin@file
+      - traefik.http.routers.grafana.middlewares=subfilter-grafana@file
   loki:
     image: grafana/loki:{{ LOKI_VER }}
     container_name: loki

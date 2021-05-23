@@ -3,6 +3,15 @@
 
 #accessLog: {}
 
+pilot:
+  token: "{{ secret_traefik.pilot }}"
+
+experimental:
+  plugins:
+    subfilter:
+      moduleName: "github.com/DirtyCajunRice/subfilter"
+      version: "v0.5.0"
+
 entryPoints:
   web:
     address: :80
@@ -38,7 +47,7 @@ entryPoints:
     address: :443
     http:
       middlewares:
-          - gzip@file
+        - gzip@file
       tls: &TLS
         certresolver: le
         domains:
@@ -51,11 +60,10 @@ entryPoints:
     address: :3443
     http:
       middlewares:
-          - home-block@file
+        - home-block@file
       tls: *TLS
     forwardedHeaders:
       trustedIPs: *CFIPs
-
 
 providers:
   docker:
