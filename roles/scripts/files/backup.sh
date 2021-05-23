@@ -51,7 +51,7 @@ function pullio() {
 
 function upload() {
 
-    rclone="docker-compose -f ${appdata_dir}/rclone/docker-compose.yml run --rm rclone -v"
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
 
     for comp in "${backup_dir}"/*.tar.gz; do
         ${rclone} move "${comp}" rost:BotBox/"$(date --utc +%Y-%m-%d_%H)"/
