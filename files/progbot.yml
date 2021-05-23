@@ -4,7 +4,7 @@ _skip_globals: ["volumes"]
 services:
   progbot:
     container_name: progbott
-    image: ghcr.io/roxedus/progbott:latest
+    image: ghcr.io/norsk-programmering/progbott:latest
     volumes:
       - "{{ appdata_path }}/progbot/data:/data"
     command: --debug
