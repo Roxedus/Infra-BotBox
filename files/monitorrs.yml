@@ -12,7 +12,7 @@ services:
       - DRSS_BOT_PREFIX=\
       - DRSS_BOT_TOKEN={{ secret_bots.rss.token }}
       - DRSS_DATABASE_URI=mongodb://mongodb_rss:27017/drss
-      - DRSS_FEEDS_REFRESHRATEMINUTES=5
+      - DRSS_FEEDS_REFRESHRATEMINUTES=15
       - DRSS_FEEDS_SENDFIRSTCYCLE=true
       - DRSS_FEEDS_SENDOLDONFIRSTCYCLE=true
       - DRSS_LOG_LEVEL=debug
@@ -62,7 +62,7 @@ services:
       - "/etc/passwd:/etc/passwd:ro"
   mongodb:
     container_name: mongodb_rss
-    image: mongo
+    image: mongo:4.4
     user: "1000:1000"
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data/db"
