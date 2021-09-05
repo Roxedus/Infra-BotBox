@@ -1,0 +1,73 @@
+version: "2.4"
+_skip_globals: ["volumes"]
+
+services:
+  views:
+    container_name: plausible
+    image: plausible/analytics:v1.3
+    command: sh -c "/entrypoint.sh db migrate && /entrypoint.sh run"
+    depends_on:
+      - plaus_db
+      - clickhouse
+
+    networks:
+      - default
+      - rp-net
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.views.entrypoints=web-secure
+
+      - traefik.http.routers.hosted.rule=Host(`hosted.{{DOMAIN}}`)
+      - traefik.http.routers.hosted.service=views-plausible
+
+      - traefik.http.middlewares.views-index.replacepathregex.regex=/js/index.js
+      - traefik.http.middlewares.views-index.replacepathregex.replacement=/js/plausible.js
+      - traefik.http.routers.hosted.middlewares=views-index
+
+    environment:
+      - SECRET_KEY_BASE={{ secret_plausible.key }}
+      - SIGNING_SALT={{ secret_plausible.salt }}
+      - "DATABASE_URL=postgres://{{ secret_plausible.db.username }}:{{ secret_plausible.db.password }}@plaus_db:5432/{{ secret_plausible.db.name }}"
+      - DISABLE_REGISTRATION=true
+      - DISABLE_SUBSCRIPTION=true
+      - CLICKHOUSE_DATABASE_URL=http://clickhouse:8123/plausible
+      - BASE_URL=https://views.{{DOMAIN}}
+      - MAILER_EMAIL={{ secret_huginn.smtp.username }}
+      - SMTP_HOST_ADDR={{ secret_huginn.smtp.server }}
+      - SMTP_USER_NAME={{ secret_huginn.smtp.username }}
+      - SMTP_USER_PWD={{ secret_huginn.smtp.password }}
+      - SMTP_HOST_PORT={{ secret_huginn.smtp.port }}
+      - GOOGLE_CLIENT_ID={{ secret_plausible.google.client_id }}
+      - GOOGLE_CLIENT_SECRET={{ secret_plausible.google.client_secret }}
+
+  clickhouse:
+    image: yandex/clickhouse-server:21.6-alpine
+    container_name: clickhouse
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/clickhouse"
+      - "{{ appdata_path }}/{{ docker_service }}/docker_related_config.xml:/etc/clickhouse-server/config.d/docker_related_config.xml:ro"
+      - "{{ appdata_path }}/{{ docker_service }}/docker_related_user_config.xml:/etc/clickhouse-server/users.d/docker_related_user_config.xml:ro"
+    tmpfs:
+      - /var/log/clickhouse-server
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  plaus_db:
+    image: postgres:12-alpine
+    container_name: plaus_db
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_PASSWORD={{ secret_plausible.db.password }}
+      - POSTGRES_USER={{ secret_plausible.db.username }}
+
+networks:
+  default:
+    external:
+      name: plausible
+  rp-net:
+    external:
+      name: intranet

@@ -1,0 +1,9 @@
+- name: Clickhouse conf
+  template:
+    src: "{{ item }}"
+    dest: "{{ appdata_path }}/plausible/"
+    mode: "644"
+    group: "{{ main_groupname }}"
+  become: true
+  with_fileglob:
+    - "*.xml"

@@ -110,8 +110,10 @@
         - cfddns
         - traefik
         - autoheal
+        - plausible
   roles:
     - role: traefik
+    - role: plausible
 
 - hosts: bots
   become: yes
