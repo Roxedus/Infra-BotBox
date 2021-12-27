@@ -4,7 +4,7 @@ _skip_globals: ["volumes"]
 services:
   views:
     container_name: plausible
-    image: plausible/analytics:v1.3
+    image: plausible/analytics:v1.4
     command: sh -c "/entrypoint.sh db migrate && /entrypoint.sh run"
     depends_on:
       - plaus_db
