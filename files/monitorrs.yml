@@ -3,7 +3,7 @@ _skip_globals: ["volumes", "restart"]
 
 services:
   monitorrs:
-    container_name: rss-bot
+    container_name: rss_bot
     image: synzen/monitorss@sha256:99390fbfb08e16033d0ea26b4059c7c98bdaf78902a8a1c7d3bded10f9ad723c
     depends_on:
       - mongodb

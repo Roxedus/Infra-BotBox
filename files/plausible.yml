@@ -63,10 +63,16 @@ services:
     user: "1000:1000"
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/postgresql/data"
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]_migration:/migration"
       - /etc/passwd:/etc/passwd:ro
     environment:
       - POSTGRES_PASSWORD={{ secret_plausible.db.password }}
       - POSTGRES_USER={{ secret_plausible.db.username }}
+
+# Migration notes
+# pg_dumpall -U $POSTGRES_USER > /migration/data.sql
+# psql -U $POSTGRES_USER < /migration/data.sql
+# psql -U $POSTGRES_USER ALTER ROLE {{ secret_plausible.db.name }} PASSWORD '{{ secret_plausible.db.password }}';
 
 networks:
   default:
