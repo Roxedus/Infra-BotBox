@@ -1,5 +1,5 @@
 - src: geerlingguy.docker
-- src: geerlingguy.security
+- src: geerlingguy.security==2.0.0
 - src: geerlingguy.ntp
 - src: grog.package
 - src: geerlingguy.pip

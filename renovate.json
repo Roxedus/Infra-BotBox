@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "docker-compose": {
+    "fileMatch": [
+      "^files/.*\\.yaml$"
+    ]
+  }
+}
