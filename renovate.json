@@ -4,7 +4,7 @@
   ],
   "docker-compose": {
     "fileMatch": [
-      "^files/.*\\.yaml$"
+      "^files/.*\\.ya?ml$"
     ]
   }
 }
