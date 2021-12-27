@@ -51,6 +51,7 @@ services:
       - "{{ appdata_path }}/{{ docker_service }}/docker_related_user_config.xml:/etc/clickhouse-server/users.d/docker_related_user_config.xml:ro"
     tmpfs:
       - /var/log/clickhouse-server
+      - /var/log/clickhouse
     ulimits:
       nofile:
         soft: 262144
