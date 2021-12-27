@@ -21,13 +21,13 @@ services:
       - HUGINN_DATABASE_HOST=mariadb
       - HUGINN_DATABASE_PORT=3306
     labels:
-          - traefik.enable=true
-          - traefik.http.routers.huginn.entrypoints=web-secure
+      - traefik.enable=true
+      - traefik.http.routers.huginn.entrypoints=web-secure
     networks:
       - default
       - rp-net
   mariadb:
-    image: ghcr.io/linuxserver/mariadb
+    image: lscr.io/linuxserver/mariadb:10.5.13
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD={{ secret_sudo }}

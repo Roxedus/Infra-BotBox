@@ -4,7 +4,7 @@ _skip_globals: ["volumes", "restart"]
 services:
   monitorrs:
     container_name: rss-bot
-    image: synzen/monitorss
+    image: synzen/monitorss@sha256:99390fbfb08e16033d0ea26b4059c7c98bdaf78902a8a1c7d3bded10f9ad723c
     depends_on:
       - mongodb
     environment:
@@ -22,7 +22,7 @@ services:
       - rp-net
   rss:
     container_name: rss_web
-    image: synzen/monitorss
+    image: synzen/monitorss@sha256:99390fbfb08e16033d0ea26b4059c7c98bdaf78902a8a1c7d3bded10f9ad723c
     depends_on:
       - mongodb
       - redis
@@ -55,14 +55,14 @@ services:
   #      - traefik.http.routers.rss.middlewares=org-admin@file
   redis:
     container_name: redis
-    image: redis:alpine
+    image: redis:6.2.6-alpine
     user: "1000:1000"
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data"
       - "/etc/passwd:/etc/passwd:ro"
   mongodb:
     container_name: mongodb_rss
-    image: mongo:4.4
+    image: mongo:4.4.11
     user: "1000:1000"
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data/db"

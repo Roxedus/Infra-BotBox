@@ -2,7 +2,7 @@ _skip_globals: ["volumes"]
 
 services:
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:8.3.3
     container_name: grafana
     user: "1000:1000"
     networks:
@@ -28,7 +28,7 @@ services:
       - traefik.http.routers.grafana.middlewares=org-admin@file
       - traefik.http.routers.grafana.middlewares=subfilter-grafana@file
   loki:
-    image: grafana/loki:{{ LOKI_VER }}
+    image: grafana/loki:1.6.1
     container_name: loki
     volumes:
       #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/inxex:/loki/index"
@@ -37,7 +37,7 @@ services:
     command: -config.file=/config/loki-config.yaml
 
   promtail:
-    image: grafana/promtail:{{ LOKI_VER }}
+    image: grafana/promtail:1.6.1
     container_name: promtail
     depends_on:
       - loki
@@ -49,7 +49,7 @@ services:
     command: -config.file=/config/promtail-config.yaml
 
   influx:
-    image: influxdb:1.8
+    image: influxdb:1.8.10
     container_name: influx
     user: "1000:1000"
     volumes:

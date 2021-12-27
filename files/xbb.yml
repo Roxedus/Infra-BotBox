@@ -3,7 +3,7 @@ version: "2.4"
 services:
   xbb:
     container_name: static-host
-    image: ghcr.io/linuxserver/nginx
+    image: lscr.io/linuxserver/nginx:1.20.2
     environment:
       - "XBB_URL=https:\\/\\/images.roxedus.net"
       - "XBB_NAME=Roxedus\\\\'s images"
