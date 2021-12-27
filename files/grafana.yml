@@ -28,7 +28,7 @@ services:
       - traefik.http.routers.grafana.middlewares=org-admin@file
       - traefik.http.routers.grafana.middlewares=subfilter-grafana@file
   loki:
-    image: grafana/loki:1.6.1
+    image: grafana/loki:2.4.1
     container_name: loki
     volumes:
       #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/inxex:/loki/index"
