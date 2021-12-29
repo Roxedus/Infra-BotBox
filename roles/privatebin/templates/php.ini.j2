@@ -1,0 +1,3 @@
+upload_max_filesize = {{ pb_max_mb | int }}
+post_max_size = {{ pb_max_mb | int }}
+memory_limit  = {{ (pb_max_mb | int) * 2  }}

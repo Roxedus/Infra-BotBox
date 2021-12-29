@@ -14,3 +14,14 @@ services:
       - CF_RECORDTYPES=A
       - APPRISE="discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png"
     restart: always
+  cfddns_sh:
+    container_name: cfddns_sh
+    image: ghcr.io/hotio/cloudflareddns
+    environment:
+      - CF_APITOKEN={{ secret_cloudflare["selfhosters.net"].apikey }}
+      - CF_APITOKEN_ZONE={{ secret_cloudflare["selfhosters.net"].zones }}
+      - CF_ZONES={{ secret_cloudflare["selfhosters.net"].zones }}
+      - CF_HOSTS=bin.selfhosters.net
+      - CF_RECORDTYPES=A
+      - APPRISE="discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png"
+    restart: always

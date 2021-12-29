@@ -98,6 +98,7 @@
   become: yes
   vars_files:
     - "vars/vault.yaml"
+  tags: [edge]
   tasks:
     - name: Edge containers
       include_role:
@@ -110,9 +111,11 @@
         - traefik
         - autoheal
         - plausible
+        - privatebin
   roles:
     - role: traefik
     - role: plausible
+    - role: privatebin
 
 - hosts: bots
   become: yes

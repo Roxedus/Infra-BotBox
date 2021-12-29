@@ -1,0 +1,37 @@
+- name: Create Privatebin directory
+  file:
+    path: "{{ appdata_path }}/privatebin/"
+    state: directory
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+
+- name: Create Privatebin data directory
+  file:
+    path: "{{ appdata_path }}/privatebin/privatebin/"
+    state: directory
+    owner: "65534"
+    group: "82"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+
+- name: Create Privatebin database directory
+  file:
+    path: "{{ appdata_path }}/privatebin/privatebin_db/"
+    state: directory
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+
+- name: Privatebin conf
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ appdata_path }}/privatebin/{{ item }}"
+    mode: "600" # To prevent unnessecary nag in logs
+    owner: "nobody"
+    group: "www-data"
+  with_items:
+    - conf.php
+    - php.ini

@@ -1,0 +1,4 @@
+pb_name: Selfhosters PasteBin
+pb_basepath: https://bin.selfhosters.net
+pb_max_mb: 209715200
+pb_database: privatebin
