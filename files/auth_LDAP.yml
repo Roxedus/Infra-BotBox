@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  authentik_ldap:
+    image: ghcr.io/goauthentik/ldap:2021.12.5
+    environment:
+      - AUTHENTIK_HOST={{ secret_authentik.ldap.host }}
+      - AUTHENTIK_INSECURE="false"
+      - AUTHENTIK_TOKEN={{ secret_authentik.ldap.token }}

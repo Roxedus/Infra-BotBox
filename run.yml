@@ -112,6 +112,7 @@
         - autoheal
         - plausible
         - privatebin
+        - auth_LDAP
   roles:
     - role: traefik
     - role: plausible
