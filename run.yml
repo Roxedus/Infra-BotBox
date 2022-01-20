@@ -180,3 +180,58 @@
     #     name: "{{ item }}"
     #   loop:
     #     - webhook
+
+- hosts: all
+  become: yes
+  tags: [update]
+  vars_files:
+    - "vars/vault.yaml"
+
+  tasks:
+    # https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
+    - name: Update packages
+      when: ansible_distribution == 'Ubuntu'
+      ansible.builtin.apt:
+        update_cache: "True"
+        force_apt_get: "True"
+        cache_valid_time: 3600
+        upgrade: "True"
+
+    - name: Remove ubuntu motd spam
+      ansible.builtin.file:
+        path: "/etc/update-motd.d/{{ item }}"
+        state: absent
+      loop:
+        - 10-help-text
+        - 50-landscape-sysinfo
+        - 50-motd-news
+        - 80-livepatch
+        - 90-updates-available
+        - 95-hwe-eol
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Update packages
+      when: ansible_distribution == 'Ubuntu'
+      ansible.builtin.apt:
+        update_cache: "True"
+        force_apt_get: "True"
+        cache_valid_time: 3600
+        upgrade: "True"
+
+    - name: Check if a reboot is needed for Debian and Ubuntu boxes
+      register: reboot_required_file
+      when: ansible_distribution == 'Ubuntu'
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+        get_md5: no
+
+    - name: Reboot the server
+      throttle: 1
+      ansible.builtin.reboot:
+        msg: "Reboot initiated by Ansible due to kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists and ansible_distribution == 'Ubuntu'
