@@ -1,7 +1,7 @@
 ---
 services:
   webhook:
-    image: ghcr.io/roxedus/webhook
+    image: ghcr.io/linuxserver-labs/webhook:2.8.0
     container_name: webhook
     environment:
       - EXTRA_PARAM=-hotreload -verbose
