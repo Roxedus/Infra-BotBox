@@ -1,10 +1,10 @@
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   grafana:
     image: grafana/grafana:8.3.4
     container_name: grafana
-    user: "1000:1000"
+    user: 1000:1000
     networks:
       - rp-net
       - default
@@ -51,11 +51,11 @@ services:
   influx:
     image: influxdb:1.8.10
     container_name: influx
-    user: "1000:1000"
+    user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/data:/var/lib/influxdb"
     environment:
-      - "INFLUXDB_ADMIN_PASSWORD={{ secret_sudo }}"
+      - INFLUXDB_ADMIN_PASSWORD={{ secret_sudo }}
       - INFLUXDB_UDP_ENABLED=true
       - INFLUXDB_UDP_DATABASE=traefik
     networks:

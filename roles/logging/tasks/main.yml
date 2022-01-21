@@ -12,24 +12,20 @@
 
 - name: Move loki config
   copy:
-    src: "files/loki-config.yaml"
+    src: files/loki-config.yaml
     dest: "{{ appdata_path }}/grafana/loki/config/loki-config.yaml"
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
     mode: "{{ docker_compose_directory_mask }}"
-  register: loki_conf
+  notify:
+    - Restart after updated logging definition
 
 - name: Move promtail config
   copy:
-    src: "files/promtail-config.yaml"
+    src: files/promtail-config.yaml
     dest: "{{ appdata_path }}/grafana/promtail/config/promtail-config.yaml"
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
     mode: "{{ docker_compose_directory_mask }}"
-  register: promtail_conf
-
-- name: Restart logging
-  when: loki_conf.changed or promtail_conf.changed
-  shell:
-    chdir: "{{ appdata_path }}/grafana"
-    cmd: "{{ docker_update_command }}"
+  notify:
+    - Restart after updated logging definition

@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   hawkbot:
@@ -16,10 +16,10 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:5.0.5
-    user: "1000:1000"
+    user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/:/data/db"
-      - "/etc/passwd:/etc/passwd:ro"
+      - /etc/passwd:/etc/passwd:ro
     environment:
       - MONGO_INITDB_ROOT_USERNAME=hawkbot
       - MONGO_INITDB_ROOT_PASSWORD={{ secret_bots.hawkbot.mongo_pass }}

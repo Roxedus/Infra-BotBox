@@ -1,7 +1,7 @@
 # log:
 #   level: DEBUG
 
-#accessLog: {}
+# accessLog: {}
 
 pilot:
   token: "{{ secret_traefik.pilot }}"
@@ -9,35 +9,35 @@ pilot:
 experimental:
   plugins:
     subfilter:
-      moduleName: "github.com/DirtyCajunRice/subfilter"
-      version: "v0.5.0"
+      moduleName: github.com/DirtyCajunRice/subfilter
+      version: v0.5.0
 
 entryPoints:
   web:
     address: :80
     forwardedHeaders:
       trustedIPs: &CFIPs
-        - "173.245.48.0/20"
-        - "103.21.244.0/22"
-        - "103.22.200.0/22"
-        - "103.31.4.0/22"
-        - "141.101.64.0/18"
-        - "108.162.192.0/18"
-        - "190.93.240.0/20"
-        - "188.114.96.0/20"
-        - "197.234.240.0/22"
-        - "198.41.128.0/17"
-        - "162.158.0.0/15"
-        - "104.16.0.0/12"
-        - "172.64.0.0/13"
-        - "131.0.72.0/22"
-        - "2400:cb00::/32"
-        - "2606:4700::/32"
-        - "2803:f800::/32"
-        - "2405:b500::/32"
-        - "2405:8100::/32"
-        - "2a06:98c0::/29"
-        - "2c0f:f248::/32"
+        - 173.245.48.0/20
+        - 103.21.244.0/22
+        - 103.22.200.0/22
+        - 103.31.4.0/22
+        - 141.101.64.0/18
+        - 108.162.192.0/18
+        - 190.93.240.0/20
+        - 188.114.96.0/20
+        - 197.234.240.0/22
+        - 198.41.128.0/17
+        - 162.158.0.0/15
+        - 104.16.0.0/12
+        - 172.64.0.0/13
+        - 131.0.72.0/22
+        - 2400:cb00::/32
+        - 2606:4700::/32
+        - 2803:f800::/32
+        - 2405:b500::/32
+        - 2405:8100::/32
+        - 2a06:98c0::/29
+        - 2c0f:f248::/32
     http:
       redirections:
         entryPoint:
@@ -51,8 +51,9 @@ entryPoints:
       tls: &TLS
         certresolver: le
         domains:
-          - main: "{{ DOMAIN }}"
-            sans: "*.{{ DOMAIN }}"
+          - main: "{{ site_domain }}"
+            sans:
+              - "*.{{ site_domain }}"
     forwardedHeaders:
       trustedIPs: *CFIPs
 
@@ -71,7 +72,7 @@ providers:
     watch: true
     exposedByDefault: false
     network: intranet
-    defaultRule: "{{ 'Host(`{{ index .Labels' + ' \\\"com.docker.compose.service\\\"}}.' + DOMAIN + '`)'}}"
+    defaultRule: "{{ 'Host(`{{ index .Labels' + ' \\\"com.docker.compose.service\\\"}}.' + site_domain + '`)'}}"
   file:
     filename: /etc/traefik/file-provider.yml
 
@@ -81,7 +82,7 @@ api:
 certificatesResolvers:
   le:
     acme:
-      #caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      # caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       storage: /etc/traefik/acme.json
       dnsChallenge:
         provider: cloudflare
@@ -100,7 +101,7 @@ metrics:
   influxDB:
     address: influx:8089
     database: traefik
-    pushInterval: 30s
+    pushInterval: 30
 
 tls:
   options:

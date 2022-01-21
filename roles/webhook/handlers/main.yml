@@ -1,0 +1,3 @@
+- name: Restart webhook after config change
+  command:
+    cmd: docker restart webhook

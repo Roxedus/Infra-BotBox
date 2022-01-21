@@ -30,8 +30,8 @@
     src: "{{ item }}.j2"
     dest: "{{ appdata_path }}/privatebin/{{ item }}"
     mode: "600" # To prevent unnessecary nag in logs
-    owner: "nobody"
-    group: "www-data"
+    owner: nobody
+    group: www-data
   with_items:
     - conf.php
     - php.ini

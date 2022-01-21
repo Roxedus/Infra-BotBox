@@ -5,11 +5,10 @@ services:
     container_name: static-host
     image: lscr.io/linuxserver/nginx:1.20.2
     environment:
-      - "XBB_URL=https:\\/\\/images.roxedus.net"
-      - "XBB_NAME=Roxedus\\\\'s images"
-      - "DOCKER_MODS=roxedus/lsio-docker-mods:nginx-xbackbone-latest"
-      - "MAXMINDDB_LICENSE_KEY={{ secret_cloudflare.maxmind }}"
+      - XBB_URL=https:\/\/images.roxedus.net
+      - XBB_NAME=Roxedus\\'s images
+      - DOCKER_MODS=roxedus/lsio-docker-mods:nginx-xbackbone-latest
     labels:
       - traefik.enable=true
       - traefik.http.routers.xbb.entrypoints=web-secure
-      - "traefik.http.routers.xbb.rule=Host(`images.{{ DOMAIN }}`) || Host(`img.{{ DOMAIN }}`)"
+      - traefik.http.routers.xbb.rule=Host(`images.{{ site_domain }}`) || Host(`img.{{ site_domain }}`)

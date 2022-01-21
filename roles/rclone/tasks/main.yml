@@ -6,7 +6,7 @@
 - name: Install rclone config file
   when: not rclone_conf.stat.exists
   template:
-    src: "rclone.conf"
+    src: rclone.conf
     dest: "{{ appdata_path }}/rclone/config/rclone.conf"
     mode: "{{ docker_compose_file_mask }}"
     owner: "{{ main_username }}"

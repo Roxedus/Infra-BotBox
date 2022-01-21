@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   views:
@@ -18,7 +18,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.views.entrypoints=web-secure
 
-      - traefik.http.routers.hosted.rule=Host(`hosted.{{DOMAIN}}`)
+      - traefik.http.routers.hosted.rule=Host(`hosted.{{site_domain}}`)
       - traefik.http.routers.hosted.service=views-plausible
 
       - traefik.http.middlewares.views-index.replacepathregex.regex=/js/index.js
@@ -28,11 +28,11 @@ services:
     environment:
       - SECRET_KEY_BASE={{ secret_plausible.key }}
       - SIGNING_SALT={{ secret_plausible.salt }}
-      - "DATABASE_URL=postgres://{{ secret_plausible.db.username }}:{{ secret_plausible.db.password }}@plaus_db:5432/{{ secret_plausible.db.name }}"
+      - DATABASE_URL=postgres://{{ secret_plausible.db.username }}:{{ secret_plausible.db.password }}@plaus_db:5432/{{ secret_plausible.db.name }}
       - DISABLE_REGISTRATION=true
       - DISABLE_SUBSCRIPTION=true
       - CLICKHOUSE_DATABASE_URL=http://clickhouse:8123/plausible
-      - BASE_URL=https://views.{{DOMAIN}}
+      - BASE_URL=https://views.{{site_domain}}
       - MAILER_EMAIL={{ secret_huginn.smtp.username }}
       - SMTP_HOST_ADDR={{ secret_huginn.smtp.server }}
       - SMTP_USER_NAME={{ secret_huginn.smtp.username }}
@@ -43,7 +43,7 @@ services:
 
   clickhouse:
     image: yandex/clickhouse-server:22.1-alpine
-    user: "1000:1000"
+    user: 1000:1000
     container_name: clickhouse
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/clickhouse"
@@ -60,7 +60,7 @@ services:
   plaus_db:
     image: postgres:14.1-alpine
     container_name: plaus_db
-    user: "1000:1000"
+    user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/postgresql/data"
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]_migration:/migration"

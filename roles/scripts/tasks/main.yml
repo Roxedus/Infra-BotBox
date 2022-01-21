@@ -1,24 +1,18 @@
 - name: Create scripts directory
   file:
-    path: "/opt/scripts"
+    path: /opt/scripts
     state: directory
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
     mode: "{{ docker_compose_directory_mask }}"
   become: true
-  register: script_dir
-
-- name: Add another bin dir to system-wide $PATH.
-  copy:
-    dest: /etc/profile.d/custom-path.sh
-    content: "PATH=$PATH:/opt/scripts"
-    mode: "0644"
-  when: script_dir.changed
+  notify:
+    - Add another bin dir to system-wide $PATH
 
 - name: Install .bash_aliases
   template:
-    src: ".bash_aliases.j2"
-    dest: "/home/{{ main_username }}/.bash_aliases"
+    src: .bash_aliases.j2
+    dest: /home/{{ main_username }}/.bash_aliases
     mode: "{{ docker_compose_file_mask }}"
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
@@ -47,7 +41,7 @@
 - name: Move scripts
   copy:
     src: "{{ item }}"
-    dest: "/opt/scripts/{{ item | splitext | first }}"
+    dest: /opt/scripts/{{ item | splitext | first }}
     mode: "0751"
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
@@ -57,7 +51,7 @@
 
 - name: Adds cron entry for pullio
   ansible.builtin.cron:
-    name: "pullio daily"
+    name: pullio daily
     minute: "0"
     hour: "12"
-    job: "pullio --tag bb > /dev/null"
+    job: pullio --tag bb && backup upload > /dev/null

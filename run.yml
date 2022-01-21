@@ -2,7 +2,7 @@
   tags: [never, config]
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   pre_tasks:
     - name: Update APT Cache
       tags: [never, init]
@@ -22,7 +22,7 @@
       copy:
         remote_src: yes
         src: /root/.ssh/authorized_keys
-        dest: "/home/{{ main_username }}/.ssh/authorized_keys"
+        dest: /home/{{ main_username }}/.ssh/authorized_keys
         owner: "{{ main_username }}"
         group: "{{ main_groupname }}"
         mode: "0600"
@@ -47,7 +47,7 @@
 - hosts: docker
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   tasks:
     - name: Install docker pip
       pip:
@@ -61,7 +61,7 @@
 - hosts: docker
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   pre_tasks:
     - name: Set Default logging
       tags: [never, init, logging]
@@ -69,8 +69,8 @@
       register: docker_deamon
       copy:
         dest: /etc/docker/daemon.json
-        owner: "root"
-        group: "root"
+        owner: root
+        group: root
         content: |
           {
             "log-driver": "journald",
@@ -87,22 +87,22 @@
         name: docker
         state: restarted
   roles:
-    - role: dock-generator
+    - role: docker_generator
       tags: [init, logging]
       vars:
-        docker_service: "grafana"
+        docker_service: grafana
     - role: logging
       tags: [init, logging]
 
 - hosts: edge
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   tags: [edge]
   tasks:
     - name: Edge containers
       include_role:
-        name: dock-generator
+        name: docker_generator
       vars:
         docker_service: "{{ item }}"
       with_items:
@@ -121,9 +121,9 @@
 - hosts: bots
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   roles:
-    - role: dock-generator
+    - role: docker_generator
       vars:
         docker_service: rclone
     - role: rclone
@@ -131,12 +131,12 @@
 - hosts: bots
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   tags: [bots, my_bots]
   tasks:
     - name: My bots
       include_role:
-        name: dock-generator
+        name: docker_generator
       vars:
         docker_service: "{{ item }}"
       with_items:
@@ -147,12 +147,12 @@
 - hosts: bots
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   tags: [bots, red_bots]
   tasks:
     - name: RedBots
       include_role:
-        name: dock-generator
+        name: docker_generator
       vars:
         docker_service: "{{ item }}"
       loop:
@@ -162,30 +162,24 @@
 - hosts: bots
   become: yes
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
   tags: [containers]
   tasks:
     - name: Containers
       include_role:
-        name: dock-generator
+        name: docker_generator
       vars:
         docker_service: "{{ item }}"
       loop:
         - monitorrs
         - huginn
         - xbb
-    #    - webhook
-    # - name: Post containers
-    #   include_role:
-    #     name: "{{ item }}"
-    #   loop:
-    #     - webhook
 
 - hosts: all
   become: yes
   tags: [update]
   vars_files:
-    - "vars/vault.yaml"
+    - vars/vault.yaml
 
   tasks:
     # https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
@@ -199,7 +193,7 @@
 
     - name: Remove ubuntu motd spam
       ansible.builtin.file:
-        path: "/etc/update-motd.d/{{ item }}"
+        path: /etc/update-motd.d/{{ item }}
         state: absent
       loop:
         - 10-help-text
@@ -228,7 +222,7 @@
     - name: Reboot the server
       throttle: 1
       ansible.builtin.reboot:
-        msg: "Reboot initiated by Ansible due to kernel updates"
+        msg: Reboot initiated by Ansible due to kernel updates
         connect_timeout: 5
         reboot_timeout: 300
         pre_reboot_delay: 0

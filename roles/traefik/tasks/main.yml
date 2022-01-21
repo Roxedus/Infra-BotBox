@@ -1,7 +1,3 @@
-- stat:
-    path: "{{ appdata_path }}/traefik/config/traefik.yml"
-  register: traefik_before
-
 - name: Traefik conf
   template:
     src: "{{ item }}"
@@ -11,14 +7,5 @@
     group: "{{ main_groupname }}"
   become: true
   with_fileglob:
-  - "*.yml"
-
-- stat:
-    path: "{{ appdata_path }}/traefik/config/traefik.yml"
-  register: traefik_after
-
-
-- name: restart traefik after config change
-  when: traefik_before.stat.checksum != traefik_after.stat.checksum
-  shell:
-    cmd: docker restart traefik
+    - "*.yml"
+  notify: Restart traefik after config change

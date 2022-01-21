@@ -22,7 +22,7 @@ package_list:
   - name: tmux
   - name: wget
 
-ntp_timezone: "Etc/UTC"
+ntp_timezone: Etc/UTC
 
 security_ssh_port: "{{ secret_ssh_port }}"
 security_ssh_password_authentication: "no"

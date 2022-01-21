@@ -13,18 +13,18 @@ compose_globals:
     services:
         hostname: "{{ inventory_hostname }}"
         environment:
-            - "PUID={{ main_uid }}"
-            - "PGID={{ main_gid }}"
-            - "TZ={{ ntp_timezone }}"
+            - PUID={{ main_uid }}
+            - PGID={{ main_gid }}
+            - TZ={{ ntp_timezone }}
         volumes:
             - "{{ appdata_path }}/{{ docker_service }}/config:/config"
         restart: unless-stopped
         labels:
-            - "ansible.managed=true"
-            - "org.hotio.pullio.bb.notify=true"
-            - "org.hotio.pullio.bb.update=true"
-            - "org.hotio.pullio.bb.script.update=bash /opt/scripts/backup pullio"
-            - "org.hotio.pullio.bb.discord.webhook=https://discord.com/api/webhooks/{{ secret_discord_webook }}"
+            - ansible.managed=true
+            - org.hotio.pullio.bb.notify=true
+            - org.hotio.pullio.bb.update=true
+            - org.hotio.pullio.bb.script.update=bash /opt/scripts/backup pullio
+            - org.hotio.pullio.bb.discord.webhook=https://discord.com/api/webhooks/{{ secret_discord_webook }}
     networks:
         default:
             external:

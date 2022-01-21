@@ -1,11 +1,11 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   privatebin:
     container_name: privatebin
     image: privatebin/pdo:1.3.5
-    #user: "1000:1000"
+    # user: 1000:1000
     read_only: true
     depends_on:
       - privatebin_db
@@ -31,7 +31,7 @@ services:
   privatebin_db:
     image: postgres:14.1-alpine
     container_name: privatebin_db
-    user: "1000:1000"
+    user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/postgresql/data"
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]_migration:/migration"

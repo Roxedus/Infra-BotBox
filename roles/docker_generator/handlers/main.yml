@@ -1,0 +1,4 @@
+- name: Restart {{ docker_service }}
+  command:
+    chdir: "{{ appdata_path }}/{{ docker_service }}"
+    cmd: "{{ docker_update_command }}"

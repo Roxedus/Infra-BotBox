@@ -4,7 +4,7 @@ services:
     image: ghcr.io/roxedus/webhook
     container_name: webhook
     environment:
-      - "EXTRA_PARAM=-hotreload -verbose"
+      - EXTRA_PARAM=-hotreload -verbose
       - DOCKER_MODS=roxedus/webhook:mods-docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   cfddns:
@@ -7,10 +7,10 @@ services:
     image: ghcr.io/hotio/cloudflareddns
     environment:
       - CF_USER={{ secret_cloudflare.email }}
-      - CF_APITOKEN={{ secret_cloudflare[DOMAIN].apikey }}
-      - CF_APITOKEN_ZONE={{ secret_cloudflare[DOMAIN].zones }}
-      - CF_ZONES={{ secret_cloudflare[DOMAIN].zones }}
-      - CF_HOSTS=bot.{{ DOMAIN }}
+      - CF_APITOKEN={{ secret_cloudflare[site_domain].apikey }}
+      - CF_APITOKEN_ZONE={{ secret_cloudflare[site_domain].zones }}
+      - CF_ZONES={{ secret_cloudflare[site_domain].zones }}
+      - CF_HOSTS=bot.{{ site_domain }}
       - CF_RECORDTYPES=A
       - APPRISE="discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png"
     restart: always

@@ -1,9 +1,9 @@
 version: "2.4"
-_skip_globals: ["volumes", "restart"]
+_skip_globals: [volumes, restart]
 
 services:
   autoheal:
     container_name: autoheal
     image: willfarrell/autoheal
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - /var/run/docker.sock:/var/run/docker.sock

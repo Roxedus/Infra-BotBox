@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["volumes"]
+_skip_globals: [volumes]
 
 services:
   huginn:
@@ -31,9 +31,9 @@ services:
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD={{ secret_sudo }}
-      - MYSQL_DATABASE={{ secret_huginn.db.name }} #optional
-      - MYSQL_USER={{ secret_huginn.db.username }} #optional
-      - MYSQL_PASSWORD={{ secret_huginn.db.password }} #optional
+      - MYSQL_DATABASE={{ secret_huginn.db.name }} # optional
+      - MYSQL_USER={{ secret_huginn.db.username }} # optional
+      - MYSQL_PASSWORD={{ secret_huginn.db.password }} # optional
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/config"
 

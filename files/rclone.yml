@@ -1,5 +1,5 @@
 version: "2.4"
-_skip_globals: ["lables", "restart"]
+_skip_globals: [lables, restart]
 
 services:
   rclone:
