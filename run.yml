@@ -30,19 +30,6 @@
     - role: geerlingguy.security
     - role: geerlingguy.ntp
     - role: grog.package
-  tasks:
-    - name: remove ubuntu motd spam
-      become: true
-      file:
-        path: "/etc/update-motd.d/{{ item }}"
-        state: absent
-      loop:
-        - 50-landscape-sysinfo
-        - 80-livepatch
-        - 95-hwe-eol
-        - 10-help-text
-        - 50-motd-news
-      when: ansible_distribution == 'Ubuntu'
 
 - hosts: docker
   become: yes
