@@ -1,0 +1,26 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2.3.1
+        with:
+          python-version: 3.8
+
+      - name: Install linters
+        run: pip install -r requirements.txt
+
+      - name: Lint YAML files
+        run: yamllint .
+
+      - name: Lint Ansible files
+        run: ansible-lint -p
