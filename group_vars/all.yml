@@ -11,6 +11,7 @@ package_list:
   - name: git
   - name: htop
   - name: iftop
+  - name: jq
   - name: lm-sensors
   - name: ncdu
   - name: net-tools
