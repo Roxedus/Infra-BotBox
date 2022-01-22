@@ -1,0 +1,14 @@
+version: "2.4"
+_skip_globals: [volumes]
+
+services:
+  orgbot:
+    container_name: orgbot
+    image: ghcr.io/phasecorex/red-discordbot:full
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/data:/data"
+    environment:
+      - PREFIX=|
+      - PREFIX2=.
+      - TOKEN={{ secret_bots.bob.token }}
+      - EXTRA_ARGS=--owner {{ secret_bots.bob.owner }} {% for item in secret_bots.bob.co_owner %}--co-owner {{ item }} {% endfor %}

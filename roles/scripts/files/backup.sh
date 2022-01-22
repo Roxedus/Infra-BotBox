@@ -5,7 +5,7 @@ backup_dir="/opt/to_cloud"
 
 exclude=("rclone traefik")
 declare -A tar_flags
-tar_flags=(["hawkbot"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["swag"]="--exclude=**.sample --exclude=**/geoip2db/** --exclude=**/dns-conf/**" ["unraider"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["grafana"]="--exclude=**/plugins/**")
+tar_flags=(["hawkbot"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["orgbot"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["swag"]="--exclude=**.sample --exclude=**/geoip2db/** --exclude=**/dns-conf/**" ["unraider"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["grafana"]="--exclude=**/plugins/**")
 
 function update() {
 
@@ -44,6 +44,7 @@ function pullio() {
     tarflags="-C ${appdata_dir}/"
     if [[ "${!tar_flags[*]}" =~ ${fldr} ]]; then tarflags="${tarflags} ${tar_flags[${fldr}]}"; fi
     echo -n "$PULLIO_OLD_VERSION" > "${appdata_dir}/${fldr}/opencontainer.txt"
+    sleep 2
     # shellcheck disable=SC2086
     tar ${tarflags} -cvzf "${backup_dir}/${fldr}.tar.gz" "${fldr}"
 

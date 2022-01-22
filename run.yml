@@ -145,6 +145,7 @@
       loop:
         - unraider
         - hawkbot
+        - orgbot
 
 - hosts: bots
   become: yes
