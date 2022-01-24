@@ -16,7 +16,7 @@
         uid: "{{ main_uid }}"
         group: "{{ main_groupname }}"
         shell: /bin/bash
-        password: "{{ secret_sudo }}"
+        password: "{{ secret_sudo | password_hash('sha512') }}"
     - name: Add a key
       tags: [never, init]
       copy:
