@@ -26,26 +26,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.grafana.entrypoints=web-secure
       - traefik.http.routers.grafana.middlewares=org-admin@file
-  loki:
-    image: grafana/loki:1.6.1
-    container_name: loki
-    volumes:
-      #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/inxex:/loki/index"
-      #  - "{{ appdata_path }}/{{ docker_service }}/[service_name]/chunks:/loki/chunks"
-      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/config:/config:ro"
-    command: -config.file=/config/loki-config.yaml
-
-  promtail:
-    image: grafana/promtail:1.6.1
-    container_name: promtail
-    depends_on:
-      - loki
-    volumes:
-      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/config:/config:ro"
-      - "{{ appdata_path }}:{{ appdata_path }}:ro"
-      - /var/log:/var/log:ro # journal things
-      - /etc/machine-id:/etc/machine-id:ro # journal things
-    command: -config.file=/config/promtail-config.yaml
 
   influx:
     image: influxdb:1.8.10
