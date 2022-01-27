@@ -39,8 +39,8 @@
     force: "yes"
 
 - name: Move scripts
-  copy:
-    src: "{{ item }}"
+  template:
+    src: files/{{ item }}
     dest: /opt/scripts/{{ item | splitext | first }}
     mode: "0751"
     owner: "{{ main_username }}"

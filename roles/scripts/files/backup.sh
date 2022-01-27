@@ -17,8 +17,8 @@ function update() {
         if docker container inspect "${fldr}" >/dev/null 2>&1; then
             hashes=""
             for service in $(${compose} config --services); do
-                IFS=: read -r image tag <<<"$(docker inspect --format='{{ index .Config.Image }}' "$service")"
-                IFS=* read -r d_hash d_tag <<<"$(docker images --digests --format="{{ .Digest }}*{{ .Tag }}" "$image")"
+                IFS=: read -r image tag <<<"$(docker inspect --format='{{ "{{ index .Config.Image }}" }}' "$service")"
+                IFS=* read -r d_hash d_tag <<<"$(docker images --digests --format="{{ "{{ .Digest }}*{{ .Tag }}" }}" "$image")"
                 if [[ "${tag:="latest"}" == "${d_tag}" ]]; then hashes="${hashes}$image@$d_hash\n"; fi
             done
             printf "%s" "${hashes}" >"${appdata_dir}/${fldr}/current_hashes.txt"
