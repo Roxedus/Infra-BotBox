@@ -1,4 +1,4 @@
 ansible-lint==5.3.2
 yamllint==1.26.3
 ansible==5.2.0
-ansible-base==2.10.16
+ansible-base==2.10.17
