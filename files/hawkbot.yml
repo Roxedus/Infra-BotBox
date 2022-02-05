@@ -15,7 +15,7 @@ services:
       - mongodb
   mongodb:
     container_name: mongodb
-    image: mongo:5.0.5
+    image: mongo:5.0.6
     user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]/:/data/db"
