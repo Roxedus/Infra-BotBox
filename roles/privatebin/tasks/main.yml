@@ -22,7 +22,7 @@
     state: directory
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
-    mode: "{{ docker_compose_directory_mask }}"
+    mode: "0700"
   become: true
 
 - name: Privatebin conf
