@@ -54,4 +54,5 @@
     name: pullio daily
     minute: "0"
     hour: "12"
-    job: pullio --tag bb && backup upload > /dev/null
+    job: /usr/local/bin/pullio --tag bb && /usr/local/bin/backup upload > /dev/null
+    user: "{{ main_username }}"
