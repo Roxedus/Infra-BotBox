@@ -26,6 +26,9 @@
         owner: "{{ main_username }}"
         group: "{{ main_groupname }}"
         mode: "0600"
+    - name: Install pip dependencies
+      pip:
+        name: "{{pip_install_dep_packages}}"
   roles:
     - role: geerlingguy.security
     - role: geerlingguy.ntp
@@ -35,7 +38,7 @@
   become: yes
   vars_files:
     - vars/vault.yaml
-  tasks:
+  pre_tasks:
     - name: Install docker pip
       pip:
         name: docker

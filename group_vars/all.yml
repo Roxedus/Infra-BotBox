@@ -1,5 +1,8 @@
 ansible_become_password: "{{ secret_sudo }}"
 
+pip_install_dep_packages:
+  - github3.py
+
 main_username: roxedus
 main_groupname: "{{ main_username }}"
 main_uid: "1000"
