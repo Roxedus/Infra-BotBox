@@ -1,6 +1,6 @@
 - hosts: all
   tags: [never, config]
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   pre_tasks:
@@ -35,7 +35,7 @@
     - role: grog.package
 
 - hosts: docker
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   pre_tasks:
@@ -49,7 +49,7 @@
       tags: [never, config, scripts]
 
 - hosts: docker
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   pre_tasks:
@@ -85,7 +85,7 @@
       tags: [init, logging]
 
 - hosts: edge
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   tags: [edge]
@@ -109,7 +109,7 @@
     - role: privatebin
 
 - hosts: bots
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   roles:
@@ -119,7 +119,7 @@
     - role: rclone
 
 - hosts: bots
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   tags: [bots, my_bots]
@@ -135,7 +135,7 @@
         - shite
 
 - hosts: bots
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   tags: [bots, red_bots]
@@ -151,7 +151,7 @@
         - orgbot
 
 - hosts: bots
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yaml
   tags: [containers]
@@ -167,7 +167,7 @@
         - xbb
 
 - hosts: all
-  become: yes
+  become: true
   tags: [update]
   vars_files:
     - vars/vault.yaml
