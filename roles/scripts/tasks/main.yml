@@ -74,7 +74,7 @@
   when: not omp_bin.stat.exists or omp_latest != ( "v" + omp_ver )
   become: true
   get_url:
-    url: https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/{ omp_latest.tag }}/posh-linux-amd64
+    url: https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/{{ omp_latest.tag }}/posh-linux-amd64
     dest: /usr/local/bin/oh-my-posh
     mode: "0744"
     owner: "{{ main_username }}"
