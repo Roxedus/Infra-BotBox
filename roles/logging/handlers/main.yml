@@ -1,5 +1,5 @@
 - name: Restart after updated logging definition
   when: loki_conf.changed or promtail_conf.changed
-  shell:
+  shell: # noqa command-instead-of-shell
     chdir: "{{ appdata_path }}/grafana"
     cmd: "{{ docker_update_command }}"
