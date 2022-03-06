@@ -1,4 +1,3 @@
----
 services:
   webhook:
     image: ghcr.io/linuxserver-labs/webhook:2.8.0

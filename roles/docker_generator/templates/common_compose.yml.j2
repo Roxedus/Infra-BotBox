@@ -1,7 +1,7 @@
 {{ ansible_managed | comment }}
-
+{#
 version: "{{ compose["version"] | default(compose_globals["version"]) | default("2.4") }}"
-
+-#}
 services:
 {% for service, definition in compose.services.items() %}
 
