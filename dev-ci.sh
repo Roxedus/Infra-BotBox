@@ -2,6 +2,6 @@
 
 source venv/bin/activate
 
-yamllint -sc yamllint.yaml .
+yamllint -sc .yamllint .
 
 ansible-lint -p
