@@ -11,7 +11,7 @@
         update_cache: yes
     - name: Add me
       tags: [never, init]
-      user:
+      ansible.builtin.user:
         name: "{{ main_username }}"
         uid: "{{ main_uid }}"
         group: "{{ main_groupname }}"
@@ -19,7 +19,7 @@
         password: "{{ secret_sudo | password_hash('sha512') }}"
     - name: Add a key
       tags: [never, init]
-      copy:
+      ansible.builtin.copy:
         remote_src: yes
         src: /root/.ssh/authorized_keys
         dest: /home/{{ main_username }}/.ssh/authorized_keys
@@ -57,7 +57,7 @@
       tags: [never, init, logging]
       become: true
       register: docker_deamon
-      copy:
+      ansible.builtin.copy:
         dest: /etc/docker/daemon.json
         owner: root
         group: root
@@ -73,7 +73,7 @@
       tags: [never, init, logging]
       become: true
       when: docker_deamon.changed
-      service:
+      ansible.builtin.service:
         name: docker
         state: restarted
   roles:
@@ -91,7 +91,7 @@
   tags: [edge]
   tasks:
     - name: Edge containers
-      include_role:
+      ansible.builtin.include_role:
         name: docker_generator
       vars:
         docker_service: "{{ item }}"
@@ -125,7 +125,7 @@
   tags: [bots, my_bots]
   tasks:
     - name: My bots
-      include_role:
+      ansible.builtin.include_role:
         name: docker_generator
       vars:
         docker_service: "{{ item }}"
@@ -141,7 +141,7 @@
   tags: [bots, red_bots]
   tasks:
     - name: RedBots
-      include_role:
+      ansible.builtin.include_role:
         name: docker_generator
       vars:
         docker_service: "{{ item }}"
@@ -157,7 +157,7 @@
   tags: [containers]
   tasks:
     - name: Containers
-      include_role:
+      ansible.builtin.include_role:
         name: docker_generator
       vars:
         docker_service: "{{ item }}"

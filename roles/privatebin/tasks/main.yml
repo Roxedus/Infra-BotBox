@@ -1,5 +1,5 @@
 - name: Create Privatebin directory
-  file:
+  ansible.builtin.file:
     path: "{{ appdata_path }}/privatebin/"
     state: directory
     owner: "{{ main_username }}"
@@ -8,7 +8,7 @@
   become: true
 
 - name: Create Privatebin data directory
-  file:
+  ansible.builtin.file:
     path: "{{ appdata_path }}/privatebin/privatebin/"
     state: directory
     owner: "65534"
@@ -17,7 +17,7 @@
   become: true
 
 - name: Create Privatebin database directory
-  file:
+  ansible.builtin.file:
     path: "{{ appdata_path }}/privatebin/privatebin_db/"
     state: directory
     owner: "{{ main_username }}"
@@ -26,7 +26,7 @@
   become: true
 
 - name: Privatebin conf
-  template:
+  ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ appdata_path }}/privatebin/{{ item }}"
     mode: "600" # To prevent unnessecary nag in logs

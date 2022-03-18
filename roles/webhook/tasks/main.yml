@@ -1,6 +1,6 @@
 - name: Move update script
   register: update
-  copy:
+  ansible.builtin.copy:
     src: update.sh
     dest: "{{ appdata_path }}/webhook/config/update.sh"
     mode: "0751"
@@ -10,7 +10,7 @@
 
 - name: Create hooks file
   register: hooks
-  template:
+  ansible.builtin.template:
     src: hooks.json
     dest: "{{ appdata_path }}/webhook/config/hooks/hooks.json"
     mode: "{{ docker_compose_file_mask }}"

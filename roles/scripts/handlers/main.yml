@@ -1,5 +1,5 @@
 - name: Add another bin dir to system-wide $PATH
-  copy:
+  ansible.builtin.copy:
     dest: /etc/profile.d/custom-path.sh
     content: PATH=$PATH:/opt/scripts
     mode: "0644"

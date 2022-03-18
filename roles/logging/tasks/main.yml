@@ -1,5 +1,5 @@
 - name: Chown directories
-  file:
+  ansible.builtin.file:
     path: "{{ appdata_path }}/grafana/{{ item }}"
     state: directory
     owner: "{{ main_username }}"
@@ -11,7 +11,7 @@
     - promtail
 
 - name: Move loki config
-  copy:
+  ansible.builtin.copy:
     src: files/loki-config.yaml
     dest: "{{ appdata_path }}/grafana/loki/config/loki-config.yaml"
     owner: "{{ main_username }}"
@@ -21,7 +21,7 @@
     - Restart after updated logging definition
 
 - name: Move promtail config
-  copy:
+  ansible.builtin.copy:
     src: files/promtail-config.yaml
     dest: "{{ appdata_path }}/grafana/promtail/config/promtail-config.yaml"
     owner: "{{ main_username }}"

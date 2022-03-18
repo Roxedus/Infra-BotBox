@@ -1,5 +1,5 @@
 - name: Clickhouse conf
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ appdata_path }}/plausible/"
     mode: "644"

@@ -1,5 +1,5 @@
 - name: Create scripts directory
-  file:
+  ansible.builtin.file:
     path: /opt/scripts
     state: directory
     owner: "{{ main_username }}"
@@ -25,7 +25,7 @@
     remote_src: yes
 
 - name: Install .bash_aliases
-  template:
+  ansible.builtin.template:
     src: .bash_aliases.j2
     dest: /home/{{ main_username }}/.bash_aliases
     mode: "{{ docker_compose_file_mask }}"
@@ -35,7 +35,7 @@
 
 - name: Download docker-compose wrapper
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/linuxserver/docker-docker-compose/master/run.sh
     dest: /usr/local/bin/docker-compose
     mode: "0744"
@@ -45,7 +45,7 @@
 
 - name: Download pullio
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/hotio/pullio/master/pullio.sh
     dest: /usr/local/bin/pullio
     mode: "0744"
@@ -73,7 +73,7 @@
 - name: Download OMP
   when: not omp_bin.stat.exists or omp_latest != ( "v" + omp_ver )
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/{{ omp_latest.tag }}/posh-linux-amd64
     dest: /usr/local/bin/oh-my-posh
     mode: "0744"
@@ -82,7 +82,7 @@
     force: "yes"
 
 - name: Download OMP config
-  get_url:
+  ansible.builtin.get_url:
     url: https://gist.githubusercontent.com/Roxedus/6a11a5dbd37c24ecacf02fb9aef06e15/raw/bd0955596238ab4e31db64c0ab1551c0ee375619/oh-my.posh.json
     dest: /home/{{ main_username }}/.config/oh-my.posh.json
     mode: "0744"
@@ -98,7 +98,7 @@
     create: yes
 
 - name: Move scripts
-  template:
+  ansible.builtin.template:
     src: files/{{ item }}
     dest: /opt/scripts/{{ item | splitext | first }}
     mode: "0751"
