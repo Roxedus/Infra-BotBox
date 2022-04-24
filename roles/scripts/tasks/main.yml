@@ -81,20 +81,11 @@
     group: "{{ main_groupname }}"
     force: "yes"
 
-- name: Download OMP config
-  ansible.builtin.get_url:
-    url: https://gist.githubusercontent.com/Roxedus/6a11a5dbd37c24ecacf02fb9aef06e15/raw/bd0955596238ab4e31db64c0ab1551c0ee375619/oh-my.posh.json
-    dest: /home/{{ main_username }}/.config/oh-my.posh.json
-    mode: "0744"
-    owner: "{{ main_username }}"
-    group: "{{ main_groupname }}"
-    force: "yes"
-
 - name: Add OMP to bash
   ansible.builtin.lineinfile:
     mode: "0744"
     path: /home/{{ main_username }}/.bashrc
-    line: eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my.posh.json)"
+    line: eval "$(oh-my-posh --init --shell bash --config https://gist.githubusercontent.com/Roxedus/6a11a5dbd37c24ecacf02fb9aef06e15/raw/bd0955596238ab4e31db64c0ab1551c0ee375619/oh-my.posh.json)"
     create: yes
 
 - name: Move scripts
