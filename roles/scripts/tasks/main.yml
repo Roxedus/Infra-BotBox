@@ -85,7 +85,7 @@
   ansible.builtin.lineinfile:
     mode: "0744"
     path: /home/{{ main_username }}/.bashrc
-    line: eval "$(oh-my-posh --init --shell bash --config https://gist.githubusercontent.com/Roxedus/6a11a5dbd37c24ecacf02fb9aef06e15/raw/bd0955596238ab4e31db64c0ab1551c0ee375619/oh-my.posh.json)"
+    line: eval "$(oh-my-posh --init --shell bash --config {{ secret_posh }})"
     create: yes
 
 - name: Move scripts
