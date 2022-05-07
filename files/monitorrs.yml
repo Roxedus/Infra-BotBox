@@ -54,7 +54,7 @@ services:
       # - traefik.http.routers.rss.middlewares=org-admin@file
   redis:
     container_name: redis
-    image: redis:6.2.6-alpine
+    image: redis:6.2.7-alpine
     user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data"
