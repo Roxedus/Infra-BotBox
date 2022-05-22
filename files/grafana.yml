@@ -2,7 +2,7 @@ _skip_globals: [volumes]
 
 services:
   grafana:
-    image: grafana/grafana:8.5.2
+    image: grafana/grafana:8.5.3
     container_name: grafana
     user: 1000:1000
     networks:
