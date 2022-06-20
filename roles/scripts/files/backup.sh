@@ -36,6 +36,41 @@ function update() {
 
 }
 
+function migrate() {
+
+    for i in "${appdata_dir}"/*/docker-compose.yml; do
+        compose="docker-compose -f $i"
+        fldr="$(echo "${i}" | awk -F/ '{print $--NF}')"
+        ${compose} down
+        tarflags="-C ${appdata_dir}/"
+        # shellcheck disable=SC2086
+        tar ${tarflags} -pcvzf "${backup_dir}/${fldr}.tar.gz"
+        ${compose} up -d
+    done
+
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
+
+    for comp in "${backup_dir}"/*.tar.gz; do
+        ${rclone} move "${comp}" rost:BotBox/migrate/
+    done
+
+}
+
+function restore() {
+
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /home/roxedus/restore:/home/roxedus/restore -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
+
+    ${rclone} copy rost:BotBox/migrate/ /home/roxedus/restore/ --create-empty-src-dirs
+
+    for i in /home/roxedus/restore/*; do
+        tarflags="-C ${appdata_dir}/"
+        # shellcheck disable=SC2086
+        tar -zxvf "${i}" ${tarflags}
+    done
+
+}
+
+
 function pullio() {
 
     fldr="$(basename "$PULLIO_COMPOSE_WORKDIR")"
