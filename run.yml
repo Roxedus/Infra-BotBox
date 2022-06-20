@@ -1,16 +1,19 @@
 - hosts: all
-  tags: [never, config]
+  tags: [never, init]
   become: true
   vars_files:
     - vars/vault.yaml
   pre_tasks:
     - name: Update APT Cache
-      tags: [never, init]
       become: true
       apt:
         update_cache: yes
+    - name: Add group
+      ansible.builtin.group:
+        name: "{{ main_groupname }}"
+        state: present
+        gid: "{{ main_gid }}"
     - name: Add me
-      tags: [never, init]
       ansible.builtin.user:
         name: "{{ main_username }}"
         uid: "{{ main_uid }}"
@@ -18,14 +21,10 @@
         shell: /bin/bash
         password: "{{ secret_sudo | password_hash('sha512') }}"
     - name: Add a key
-      tags: [never, init]
-      ansible.builtin.copy:
-        remote_src: yes
-        src: /root/.ssh/authorized_keys
-        dest: /home/{{ main_username }}/.ssh/authorized_keys
-        owner: "{{ main_username }}"
-        group: "{{ main_groupname }}"
-        mode: "0600"
+      ansible.posix.authorized_key:
+        user: "{{ main_username }}"
+        key: "https://github.com/{{ main_username }}.keys"
+  post_tasks:
     - name: Install pip dependencies
       pip:
         name: "{{pip_install_dep_packages}}"
@@ -40,13 +39,14 @@
     - vars/vault.yaml
   pre_tasks:
     - name: Install docker pip
+      tags: [never, init]
       pip:
         name: docker
   roles:
     - role: geerlingguy.docker
-      tags: [never, config]
+      tags: [never, init, config]
     - role: scripts
-      tags: [never, config, scripts]
+      tags: [init, config, scripts]
 
 - hosts: docker
   become: true
@@ -103,6 +103,7 @@
 
 - hosts: bots
   become: true
+  tags: [init, config, scripts]
   vars_files:
     - vars/vault.yaml
   roles:
@@ -180,6 +181,7 @@
         path: /etc/update-motd.d/{{ item }}
         state: absent
       loop:
+        - 00-header
         - 10-help-text
         - 50-landscape-sysinfo
         - 50-motd-news
@@ -187,6 +189,18 @@
         - 90-updates-available
         - 95-hwe-eol
       when: ansible_distribution == 'Ubuntu'
+
+    - name: Place MoTD
+      become: true
+      when: ansible_distribution == 'Ubuntu'
+      ansible.builtin.copy:
+        content: |
+          #!/bin/sh
+          # Ansible managed
+
+          neofetch
+        mode: 0755
+        dest: /etc/update-motd.d/01-neofetch
 
     - name: Update packages
       when: ansible_distribution == 'Ubuntu'
