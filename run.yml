@@ -76,13 +76,6 @@
       ansible.builtin.service:
         name: docker
         state: restarted
-  roles:
-    - role: docker_generator
-      tags: [init, logging]
-      vars:
-        docker_service: grafana
-    - role: logging
-      tags: [init, logging]
 
 - hosts: edge
   become: true
