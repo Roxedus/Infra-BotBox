@@ -33,15 +33,15 @@
     group: "{{ main_groupname }}"
   become: true
 
-- name: Download docker-compose wrapper
-  become: true
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/linuxserver/docker-docker-compose/master/run.sh
-    dest: /usr/local/bin/docker-compose
-    mode: "0744"
-    owner: "{{ main_username }}"
-    group: "{{ main_groupname }}"
-    force: "yes"
+# - name: Download docker compose wrapper
+#   become: true
+#   ansible.builtin.get_url:
+#     url: https://raw.githubusercontent.com/linuxserver/docker-docker compose/master/run.sh
+#     dest: /usr/local/bin/docker compose
+#     mode: "0744"
+#     owner: "{{ main_username }}"
+#     group: "{{ main_groupname }}"
+#     force: "yes"
 
 - name: Download pullio
   become: true

@@ -38,8 +38,7 @@ services:
 
 networks:
   default:
-    external:
-      name: huginn
+    name: huginn
   rp-net:
-    external:
-      name: intranet
+    name: intranet
+    external: true

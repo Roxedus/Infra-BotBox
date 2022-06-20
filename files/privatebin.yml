@@ -43,5 +43,5 @@ networks:
   default:
     internal: true
   rp-net:
-    external:
-      name: intranet
+    name: intranet
+    external: true

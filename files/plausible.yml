@@ -75,8 +75,7 @@ services:
 
 networks:
   default:
-    external:
-      name: plausible
+    name: plausible
   rp-net:
-    external:
-      name: intranet
+    name: intranet
+    external: true

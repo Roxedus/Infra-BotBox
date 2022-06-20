@@ -5,6 +5,7 @@ services:
     container_name: shite
     depends_on:
       - lavalink
+      - lavalink_dev
     image: rnorge/music:dev
     environment:
       - debug=true

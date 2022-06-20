@@ -27,8 +27,8 @@ compose_globals:
             - org.hotio.pullio.bb.discord.webhook=https://discord.com/api/webhooks/{{ secret_discord_webook }}
     networks:
         default:
-            external:
-                name: intranet
+            external: true
+            name: intranet
 
 docker_update_command: |
     docker-compose pull && docker-compose down --remove-orphans && docker-compose rm && docker-compose up -d

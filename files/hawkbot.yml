@@ -25,5 +25,4 @@ services:
 
 networks:
   default:
-    external:
-      name: hawkbot
+    name: hawkbot
