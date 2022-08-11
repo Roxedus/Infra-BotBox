@@ -23,7 +23,7 @@
     - name: Add a key
       ansible.posix.authorized_key:
         user: "{{ main_username }}"
-        key: "https://github.com/{{ main_username }}.keys"
+        key: https://github.com/{{ main_username }}.keys
   post_tasks:
     - name: Install pip dependencies
       pip:
