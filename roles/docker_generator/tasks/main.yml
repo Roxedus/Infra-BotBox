@@ -1,4 +1,4 @@
-- name: Create {{ docker_service }} directory
+- name: Create {{ docker_service }} directory # noqa name[template]
   ansible.builtin.file:
     path: "{{ appdata_path }}/{{ docker_service }}"
     state: directory
@@ -7,12 +7,12 @@
     mode: "{{ docker_compose_directory_mask }}"
   become: true
 
-- name: Read {{ docker_service }} compose defintion
+- name: Read {{ docker_service }} compose defintion # noqa name[template]
   ansible.builtin.include_vars:
     file: files/{{ docker_service }}.yml
     name: compose
 
-- name: Install {{ docker_service }} compose file
+- name: Install {{ docker_service }} compose file # noqa name[template]
   ansible.builtin.template:
     src: common_compose.yml.j2
     dest: "{{ appdata_path }}/{{ docker_service }}/docker-compose.yml"
