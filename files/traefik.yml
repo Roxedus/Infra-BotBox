@@ -3,7 +3,7 @@ _skip_globals: [volumes]
 services:
   traefik:
     container_name: traefik
-    image: traefik:v2.8.5
+    image: traefik:v2.9.1
     environment:
       - CF_DNS_API_TOKEN={{ secret_cloudflare[site_domain].apikey }}
       - TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_EMAIL={{ secret_cloudflare.email }}
