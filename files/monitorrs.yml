@@ -61,7 +61,7 @@ services:
       - /etc/passwd:/etc/passwd:ro
   mongodb:
     container_name: mongodb_rss
-    image: mongo:5.0.12
+    image: mongo:5.0.13
     user: 1000:1000
     volumes:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/data/db"
