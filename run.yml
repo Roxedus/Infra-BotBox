@@ -176,6 +176,11 @@
         cache_valid_time: 3600
         upgrade: "True"
 
+    - name: Remove MoTD
+      ansible.builtin.file:
+        path: /etc/motd
+        state: absent
+
     - name: Remove ubuntu motd spam
       ansible.builtin.file:
         path: /etc/update-motd.d/{{ item }}
