@@ -57,7 +57,7 @@ services:
         hard: 262144
 
   plaus_db:
-    image: postgres:14.5-alpine
+    image: postgres:15.0-alpine
     container_name: plaus_db
     user: 1000:1000
     volumes:
