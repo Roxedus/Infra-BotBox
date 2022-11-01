@@ -1,4 +1,4 @@
-ansible-lint==6.8.1
+ansible-lint==6.8.6
 yamllint==1.28.0
 ansible==6.4.0
 wheel==0.37.1
