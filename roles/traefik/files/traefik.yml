@@ -91,12 +91,6 @@ certificatesResolvers:
       httpChallenge:
         entryPoint: web
 
-metrics:
-  influxDB:
-    address: influx:8089
-    database: traefik
-    pushInterval: 30
-
 tls:
   options:
     default:
