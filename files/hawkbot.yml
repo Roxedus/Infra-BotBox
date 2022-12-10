@@ -10,18 +10,6 @@ services:
       - PREFIX=-
       - TOKEN={{ secret_bots.hawkbot.token }}
       - STORAGE_TYPE=json
-    depends_on:
-      - mongodb
-  mongodb:
-    container_name: mongodb
-    image: mongo:6.0.2
-    user: 1000:1000
-    volumes:
-      - "{{ appdata_path }}/{{ docker_service }}/[service_name]/:/data/db"
-      - /etc/passwd:/etc/passwd:ro
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=hawkbot
-      - MONGO_INITDB_ROOT_PASSWORD={{ secret_bots.hawkbot.mongo_pass }}
 
 networks:
   default:

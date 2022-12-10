@@ -167,6 +167,11 @@
     - vars/vault.yaml
 
   tasks:
+    - name: Remove ubuntu apt spam pt1
+      ansible.builtin.file:
+        path: /etc/apt/apt.conf.d/20apt-esm-hook.conf
+        state: absent
+
     # https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
     - name: Update packages
       when: ansible_distribution == 'Ubuntu'
@@ -175,6 +180,12 @@
         force_apt_get: "True"
         cache_valid_time: 3600
         upgrade: "True"
+
+    - name: Remove ubuntu apt spam pt2
+      ansible.builtin.file:
+        path: /etc/apt/apt.conf.d/20apt-esm-hook.conf
+        src: /dev/null
+        state: link
 
     - name: Remove MoTD
       ansible.builtin.file:
