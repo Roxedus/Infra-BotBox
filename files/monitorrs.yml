@@ -3,7 +3,7 @@ _skip_globals: [volumes, restart]
 services:
   monitorrs:
     container_name: rss_bot
-    image: synzen/monitorss@sha256:4eeb28e5df07686c724e7dbb470b6cd8c91e0aa9c9b5f11dde75b7880232454d
+    image: synzen/monitorss@sha256:f6fbfb30738c1e4aadd9808bcfa6914e3e4cec73597f9f4f6e11244229e14ca5
     depends_on:
       - mongodb
     environment:
@@ -21,7 +21,7 @@ services:
       - rp-net
   rss:
     container_name: rss_web
-    image: synzen/monitorss@sha256:4eeb28e5df07686c724e7dbb470b6cd8c91e0aa9c9b5f11dde75b7880232454d
+    image: synzen/monitorss@sha256:f6fbfb30738c1e4aadd9808bcfa6914e3e4cec73597f9f4f6e11244229e14ca5
     depends_on:
       - mongodb
       - redis
