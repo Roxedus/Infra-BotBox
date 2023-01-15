@@ -41,7 +41,7 @@ services:
       - default
       - rp-net
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:${DRSSWEB_HTTP_PORT} || exit 1
+      test: wget --no-verbose --tries=1 --spider http://localhost:$${DRSSWEB_HTTP_PORT} || exit 1
       interval: 1m30s
       timeout: 10s
       retries: 3
