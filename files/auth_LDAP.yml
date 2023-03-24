@@ -1,7 +1,7 @@
 services:
   authentik_ldap:
     container_name: authentik_ldap
-    image: ghcr.io/goauthentik/ldap:2022.12.2
+    image: ghcr.io/goauthentik/ldap:2022.12.3
     environment:
       - AUTHENTIK_HOST={{ secret_authentik.ldap.host }}
       - AUTHENTIK_INSECURE=false
