@@ -5,6 +5,7 @@ services:
     container_name: rss_bot
     image: synzen/monitorss@sha256:d2e6ebb266551dfa97abce13c2a89e0097685840dd429084982e7e456c5e8fa7
     init: true
+    restart: on-failure:5
     depends_on:
       - mongodb
     environment:
@@ -24,6 +25,7 @@ services:
     container_name: rss_web
     image: synzen/monitorss@sha256:d2e6ebb266551dfa97abce13c2a89e0097685840dd429084982e7e456c5e8fa7
     init: true
+    restart: on-failure:5
     depends_on:
       - mongodb
       - redis
