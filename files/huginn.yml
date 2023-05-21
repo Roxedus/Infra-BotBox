@@ -26,7 +26,7 @@ services:
       - default
       - rp-net
   mariadb:
-    image: lscr.io/linuxserver/mariadb:10.6.12
+    image: lscr.io/linuxserver/mariadb:10.6.13
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD={{ secret_sudo }}
