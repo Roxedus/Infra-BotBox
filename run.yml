@@ -89,13 +89,11 @@
       vars:
         docker_service: "{{ item }}"
       with_items:
-        - organizr
         - cfddns
         - traefik
         - autoheal
         - plausible
         - privatebin
-        - auth_LDAP
   roles:
     - role: traefik
     - role: plausible
