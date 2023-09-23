@@ -11,7 +11,7 @@ services:
       - CF_ZONES={{ secret_cloudflare[site_domain].zones }}
       - CF_HOSTS=bot.{{ site_domain }}
       - CF_RECORDTYPES=A
-      - APPRISE="discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png"
+      - APPRISE=discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png
     restart: always
   cfddns_sh:
     container_name: cfddns_sh
@@ -22,5 +22,5 @@ services:
       - CF_ZONES={{ secret_cloudflare["selfhosters.net"].zones }}
       - CF_HOSTS=bin.selfhosters.net
       - CF_RECORDTYPES=A
-      - APPRISE="discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png"
+      - APPRISE=discord://{{ secret_discord_webook }}?avatar_url=https://logodix.com/logo/1920722.png
     restart: always
