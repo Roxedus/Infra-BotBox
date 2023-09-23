@@ -3,7 +3,7 @@ _skip_globals: [volumes]
 services:
   huginn:
     container_name: huginn
-    image: huginn/huginn
+    image: ghcr.io/huginn/huginn
     depends_on:
       - mariadb
     environment:
