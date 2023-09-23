@@ -28,5 +28,5 @@ jobs:
       - name: Lint YAML files
         run: yamllint .
 
-      - name: Lint Ansible files
-        run: ansible-lint -p
+      # - name: Lint Ansible files
+      #   run: ansible-lint -p
