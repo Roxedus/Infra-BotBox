@@ -58,7 +58,7 @@ services:
       # - traefik.http.routers.rss.middlewares=org-admin@file
   redis:
     container_name: redis
-    image: redis:7.2.1-alpine
+    image: redis:7.2.2-alpine
     init: true
     user: 1000:1000
     volumes:
