@@ -19,7 +19,7 @@
     mode: "{{ docker_compose_file_mask }}"
     owner: "{{ main_username }}"
     group: "{{ main_groupname }}"
-    validate: docker-compose -f %s config
+    validate: docker compose -f %s config
   notify:
     - Restart {{ docker_service }}
   become: true
