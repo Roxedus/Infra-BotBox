@@ -178,6 +178,7 @@
         force_apt_get: "True"
         cache_valid_time: 3600
         upgrade: "True"
+        autoremove: "True"
 
     - name: Remove ubuntu apt spam pt2
       ansible.builtin.file:
