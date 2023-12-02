@@ -88,6 +88,8 @@ services:
 networks:
   default:
     name: rss
+    labels:
+      com.docker.compose.network: default
   rp-net:
     name: intranet
     external: true

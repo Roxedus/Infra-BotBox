@@ -76,6 +76,8 @@ services:
 networks:
   default:
     name: plausible
+    labels:
+      com.docker.compose.network: default
   rp-net:
     name: intranet
     external: true

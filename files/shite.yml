@@ -27,3 +27,5 @@ services:
 networks:
   default:
     name: shitenet
+    labels:
+      com.docker.compose.network: default

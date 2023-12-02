@@ -39,6 +39,8 @@ services:
 networks:
   default:
     name: huginn
+    labels:
+      com.docker.compose.network: default
   rp-net:
     name: intranet
     external: true

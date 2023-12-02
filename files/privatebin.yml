@@ -42,6 +42,8 @@ services:
 networks:
   default:
     internal: true
+    labels:
+      com.docker.compose.network: default
   rp-net:
     name: intranet
     external: true

@@ -29,7 +29,8 @@ compose_globals:
         default:
             external: true
             name: intranet
-
+            labels:
+                com.docker.compose.network: default
 docker_update_command: |
     docker compose pull && docker compose down --remove-orphans && docker compose rm && docker compose up -d
 

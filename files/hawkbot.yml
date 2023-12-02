@@ -14,3 +14,5 @@ services:
 networks:
   default:
     name: hawkbot
+    labels:
+      com.docker.compose.network: default
