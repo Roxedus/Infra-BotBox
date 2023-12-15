@@ -3,7 +3,7 @@ _skip_globals: [volumes]
 services:
   privatebin:
     container_name: privatebin
-    image: privatebin/pdo:1.6.0
+    image: privatebin/pdo:1.6.2
     # user: 1000:1000
     read_only: true
     depends_on:
