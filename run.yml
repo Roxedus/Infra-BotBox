@@ -230,7 +230,7 @@
       when: ansible_distribution == 'Ubuntu'
       ansible.builtin.stat:
         path: /var/run/reboot-required
-        get_md5: no
+        get_checksum: no
 
     - name: Reboot the server
       throttle: 1
