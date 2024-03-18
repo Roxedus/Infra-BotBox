@@ -70,7 +70,7 @@ services:
       - autoheal=true
   mongodb:
     container_name: mongodb_rss
-    image: mongo:7.0.5
+    image: mongo:7.0.7
     init: true
     user: 1000:1000
     volumes:
