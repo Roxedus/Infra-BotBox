@@ -1,0 +1,50 @@
+_skip_globals: [volumes]
+
+services:
+  rallly:
+    image: lukevella/rallly:3.7.0
+    restart: always
+    depends_on:
+      - rallly_db
+    user: 1000:1000
+    read_only: true
+
+    environment:
+      - DATABASE_URL=postgres://{{ secret_rally.db.username }}:{{ secret_rally.db.password }}@rallly_db:5432/db
+      - NEXT_PUBLIC_BASE_URL=https://rallly.roxedus.net
+      - SUPPORT_EMAIL=void@roxedus.net
+      - SECRET_PASSWORD={{ secret_rally.app.salt }}
+      - ALLOWED_EMAILS=*@roxedus.dev
+      - NOREPLY_EMAIL={{ secret_huginn.smtp.username }}
+      - SMTP_HOST={{ secret_huginn.smtp.server }}
+      - SMTP_PORT={{ secret_huginn.smtp.port }}
+      - SMTP_TLS_ENABLED=true
+      - SMTP_USER={{ secret_huginn.smtp.username }}
+      - SMTP_PWD={{ secret_huginn.smtp.password }}
+    networks:
+      - default
+      - rp-net
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.rallly.entrypoints=web-secure
+      - traefik.http.services.rallly.loadbalancer.server.port=3000
+
+  rallly_db:
+    image: postgres:14.10-alpine
+    container_name: rallly_db
+    user: 1000:1000
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/var/lib/postgresql/data"
+      - /etc/passwd:/etc/passwd:ro
+    environment:
+      - POSTGRES_PASSWORD={{ secret_rally.db.password }}
+      - POSTGRES_USER={{ secret_rally.db.username }}
+
+networks:
+  default:
+    internal: true
+    labels:
+      com.docker.compose.network: default
+  rp-net:
+    name: intranet
+    external: true

@@ -122,7 +122,6 @@
       vars:
         docker_service: "{{ item }}"
       with_items:
-        - publisher
         - progbot
         - shite
 
@@ -154,6 +153,7 @@
       vars:
         docker_service: "{{ item }}"
       loop:
+        - rally
         - monitorrs
         - huginn
         - xbb
