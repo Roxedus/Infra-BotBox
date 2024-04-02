@@ -1,0 +1,19 @@
+_skip_globals: [volumes]
+
+services:
+  maddy:
+    container_name: maddy
+    image: ghcr.io/foxcpp/maddy:0.7.1
+    user: 1000:1000
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      - SMTP_RELAY_SMTP_PORT=25
+      - SMTP_RELAY_SERVER_PORT=465
+      - SMTP_RELAY_HOSTNAME={{ secret_maddy.hostname }}
+      - SMTP_RELAY_SERVER={{ secret_maddy.server }}
+      - SMTP_RELAY_USERNAME={{ secret_maddy.username }}
+      - SMTP_RELAY_PASSWORD={{ secret_maddy.password }}
+    volumes:
+      - "{{ appdata_path }}/{{ docker_service }}/data:/data"

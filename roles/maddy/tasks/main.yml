@@ -1,0 +1,9 @@
+- name: Move update script
+  register: update
+  ansible.builtin.copy:
+    src: maddy.conf
+    dest: "{{ appdata_path }}/maddy/data/maddy.conf"
+    mode: "0751"
+    owner: "{{ main_username }}"
+    group: "{{ main_groupname }}"
+  notify: Restart maddy after config change

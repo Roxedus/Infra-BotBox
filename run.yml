@@ -91,11 +91,13 @@
       with_items:
         - cfddns
         - traefik
+        - maddy
         - autoheal
         - plausible
         - privatebin
   roles:
     - role: traefik
+    - role: maddy
     - role: plausible
     - role: privatebin
 
@@ -165,7 +167,7 @@
     - vars/vault.yaml
 
   tasks:
-    - name: Remove ubuntu apt spam pt1
+    - name: Remove ubuntu apt spam
       ansible.builtin.file:
         path: /etc/apt/apt.conf.d/20apt-esm-hook.conf
         state: absent
@@ -180,11 +182,10 @@
         upgrade: "True"
         autoremove: "True"
 
-    - name: Remove ubuntu apt spam pt2
+    - name: Remove ubuntu apt spam
       ansible.builtin.file:
         path: /etc/apt/apt.conf.d/20apt-esm-hook.conf
-        src: /dev/null
-        state: link
+        state: absent
 
     - name: Remove MoTD
       ansible.builtin.file:
