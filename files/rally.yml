@@ -3,7 +3,6 @@ _skip_globals: [volumes]
 services:
   rallly:
     image: lukevella/rallly:3.7.0
-    restart: always
     depends_on:
       - rallly_db
     user: 1000:1000
@@ -15,12 +14,11 @@ services:
       - SUPPORT_EMAIL=void@roxedus.net
       - SECRET_PASSWORD={{ secret_rally.app.salt }}
       - ALLOWED_EMAILS=*@roxedus.dev
-      - NOREPLY_EMAIL={{ secret_huginn.smtp.username }}
-      - SMTP_HOST={{ secret_huginn.smtp.server }}
-      - SMTP_PORT={{ secret_huginn.smtp.port }}
-      - SMTP_TLS_ENABLED=true
-      - SMTP_USER={{ secret_huginn.smtp.username }}
-      - SMTP_PWD={{ secret_huginn.smtp.password }}
+      - NOREPLY_EMAIL=noreply@{{ secret_maddy.hostname }}
+      - SMTP_HOST=maddy
+      - SMTP_PORT=25
+      - SMTP_TLS_ENABLED=false
+      - SMTP_SECURE=false
     networks:
       - default
       - rp-net
