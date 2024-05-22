@@ -13,7 +13,7 @@ services:
       - NEXT_PUBLIC_BASE_URL=https://rallly.roxedus.net
       - SUPPORT_EMAIL=void@roxedus.net
       - SECRET_PASSWORD={{ secret_rally.app.salt }}
-      - ALLOWED_EMAILS=*@roxedus.dev
+      # - ALLOWED_EMAILS=*@roxedus.dev
       - NOREPLY_EMAIL=noreply@{{ secret_maddy.hostname }}
       - SMTP_HOST=maddy
       - SMTP_PORT=25
