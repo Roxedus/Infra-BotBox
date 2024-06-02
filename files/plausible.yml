@@ -39,7 +39,7 @@ services:
       - GOOGLE_CLIENT_SECRET={{ secret_plausible.google.client_secret }}
 
   clickhouse:
-    image: clickhouse/clickhouse-server:24.4-alpine
+    image: clickhouse/clickhouse-server:24.5-alpine
     user: 1000:1000
     container_name: clickhouse
     volumes:
