@@ -1,16 +1,6 @@
 # Dynamic Configuration
 http:
-  routers:
-    dash:
-      entryPoints: dash
-      rule: Host(`dir.{{ site_domain }}`)
-      service: api@internal
-
   middlewares:
-    home-block:
-      ipWhiteList:
-        sourceRange:
-          - "{{ secret_traefik.homeIp }}"
     gzip:
       compress: {}
     org-admin:

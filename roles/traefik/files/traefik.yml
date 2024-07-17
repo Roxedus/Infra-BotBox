@@ -3,8 +3,8 @@
 
 # accessLog: {}
 
-pilot:
-  token: "{{ secret_traefik.pilot }}"
+core:
+  defaultRuleSyntax: v2
 
 entryPoints:
   web:
@@ -22,7 +22,8 @@ entryPoints:
         - 197.234.240.0/22
         - 198.41.128.0/17
         - 162.158.0.0/15
-        - 104.16.0.0/12
+        - 104.16.0.0/13
+        - 104.24.0.0/14
         - 172.64.0.0/13
         - 131.0.72.0/22
         - 2400:cb00::/32
@@ -51,15 +52,6 @@ entryPoints:
     forwardedHeaders:
       trustedIPs: *CFIPs
 
-  dash:
-    address: :3443
-    http:
-      middlewares:
-        - home-block@file
-      tls: *TLS
-    forwardedHeaders:
-      trustedIPs: *CFIPs
-
 providers:
   docker:
     endpoint: unix:///var/run/docker.sock
@@ -69,9 +61,6 @@ providers:
     defaultRule: "{{ 'Host(`{{ index .Labels' + ' \\\"com.docker.compose.service\\\"}}.' + site_domain + '`)'}}"
   file:
     filename: /etc/traefik/file-provider.yml
-
-api:
-  dashboard: true
 
 certificatesResolvers:
   le:
