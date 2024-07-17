@@ -48,7 +48,7 @@ function migrate() {
         ${compose} up -d
     done
 
-    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf --user 1000:1000 -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v /opt/appdata/rclone/config:/config rclone/rclone -v"
 
     for comp in "${backup_dir}"/*.tar.gz; do
         ${rclone} move "${comp}" rost:BotBox/migrate/
@@ -58,7 +58,7 @@ function migrate() {
 
 function restore() {
 
-    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /home/roxedus/restore:/home/roxedus/restore -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf --user 1000:1000 -e TZ=Etc/UTC -v /home/roxedus/restore:/home/roxedus/restore -v /opt/appdata/rclone/config:/config rclone/rclone -v"
 
     ${rclone} copy rost:BotBox/migrate/ /home/roxedus/restore/ --create-empty-src-dirs
 
@@ -87,13 +87,24 @@ function pullio() {
 
 function upload() {
 
-    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf -e PUID={{ main_uid }} -e PGID={{ main_gid }} -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v {{ appdata_path }}/rclone/config:/config ghcr.io/hotio/rclone -v"
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf --user 1000:1000 -e TZ=Etc/UTC -v /opt/to_cloud:/opt/to_cloud -v /opt/appdata/rclone/config:/config rclone/rclone -v"
+
+    ${rclone} ls rost:/BotBox >/dev/null && curl -fsS -m 10 --retry 5 -o /dev/null "https://hc-ping.com/{{ secret_healtchecks.pullio }}"
 
     for comp in "${backup_dir}"/*.tar.gz; do
         ${rclone} move "${comp}" rost:BotBox/"$(date --utc +%Y-%m-%d_%H)"/
     done
 
 }
+
+function reconnect() {
+
+    rclone="docker run --rm -i --name rclone -e RCLONE_CONFIG=/config/rclone.conf --user 1000:1000 -e TZ=Etc/UTC -v /opt/appdata/rclone/config:/config rclone/rclone -v"
+
+    ${rclone} config reconnect rost:
+
+}
+
 
 # Check if the function exists
 if declare -f "$1" >/dev/null; then
