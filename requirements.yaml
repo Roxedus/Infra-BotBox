@@ -8,4 +8,4 @@ roles:
   - name: grog.package
     version: v1.4.0
   - name: geerlingguy.pip
-    version: 3.0.3
+    version: 3.1.0
