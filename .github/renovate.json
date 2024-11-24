@@ -1,6 +1,6 @@
 {
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "docker-compose": {
     "fileMatch": [
@@ -9,19 +9,19 @@
   },
   "packageRules": [
     {
-      "matchSourceUrlPrefixes": [
-        "https://github.com/grafana/loki"
-      ],
-      "groupName": "Loki Monorepo"
+      "groupName": "Loki Monorepo",
+      "matchSourceUrls": [
+        "https://github.com/grafana/loki{/,}**"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "lavalink"
-      ],
       "matchManagers": [
         "docker-compose"
       ],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": [
+        "/lavalink/"
+      ]
     }
   ]
 }
