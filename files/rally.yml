@@ -28,7 +28,7 @@ services:
       - traefik.http.services.rallly.loadbalancer.server.port=3000
 
   rallly_db:
-    image: postgres:14.13-alpine
+    image: postgres:14.15-alpine
     container_name: rallly_db
     user: 1000:1000
     volumes:
