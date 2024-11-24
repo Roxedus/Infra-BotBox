@@ -1,6 +1,6 @@
 roles:
   - name: geerlingguy.docker
-    version: 7.3.0
+    version: 7.4.3
   - name: geerlingguy.security
     version: 2.4.0
   - name: geerlingguy.ntp
