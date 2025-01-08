@@ -4,7 +4,7 @@ roles:
   - name: geerlingguy.security
     version: 2.4.0
   - name: geerlingguy.ntp
-    version: 2.5.0
+    version: 2.7.0
   - name: grog.package
     version: v1.4.0
   - name: geerlingguy.pip
