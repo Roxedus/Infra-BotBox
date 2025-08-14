@@ -1,4 +1,5 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
   ],
@@ -8,12 +9,6 @@
     ]
   },
   "packageRules": [
-    {
-      "groupName": "Loki Monorepo",
-      "matchSourceUrls": [
-        "https://github.com/grafana/loki{/,}**"
-      ]
-    },
     {
       "matchManagers": [
         "docker-compose"
