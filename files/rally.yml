@@ -2,10 +2,10 @@ _skip_globals: [volumes]
 
 services:
   rallly:
-    image: lukevella/rallly:3.11.2
+    image: lukevella/rallly:4.2.0
     depends_on:
       - rallly_db
-    user: 1000:1000
+    user: 1001:1001
     read_only: true
 
     environment:
