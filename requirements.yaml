@@ -6,6 +6,6 @@ roles:
   - name: geerlingguy.ntp
     version: 2.7.0
   - name: grog.package
-    version: v1.4.0
+    version: v1.4.1
   - name: geerlingguy.pip
     version: 3.1.0
