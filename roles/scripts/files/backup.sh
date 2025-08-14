@@ -10,7 +10,7 @@ tar_flags=(["hawkbot"]="--exclude=**/venv/** --exclude=**/Downloader/lib/**" ["o
 function update() {
 
     for i in "${appdata_dir}"/*/docker-compose.yml; do
-        compose="docker-compose -f $i"
+        compose="docker compose -f $i"
         fldr="$(echo "${i}" | awk -F/ '{print $--NF}')"
         if [[ "${exclude[*]}" =~ ${fldr} ]]; then continue; fi
 
@@ -39,7 +39,7 @@ function update() {
 function migrate() {
 
     for i in "${appdata_dir}"/*/docker-compose.yml; do
-        compose="docker-compose -f $i"
+        compose="docker compose -f $i"
         fldr="$(echo "${i}" | awk -F/ '{print $--NF}')"
         ${compose} down
         tarflags="-C ${appdata_dir}/"
