@@ -28,7 +28,7 @@ services:
       - "{{ appdata_path }}/{{ docker_service }}/[service_name]:/srv/data"
 
   privatebin_db:
-    image: postgres:14.18-alpine
+    image: postgres:17.6-alpine
     container_name: privatebin_db
     user: 1000:1000
     volumes:
