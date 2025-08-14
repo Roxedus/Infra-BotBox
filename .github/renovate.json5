@@ -4,8 +4,8 @@
     "config:recommended"
   ],
   "docker-compose": {
-    "fileMatch": [
-      "^files/.*\\.ya?ml$"
+    "managerFilePatterns": [
+      "/^files/.*\\.ya?ml$/"
     ]
   },
   "packageRules": [
@@ -18,5 +18,8 @@
         "/lavalink/"
       ]
     }
+  ],
+  "suppressNotifications": [
+    "prIgnoreNotification"
   ]
 }
