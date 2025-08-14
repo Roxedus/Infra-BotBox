@@ -2,6 +2,15 @@
     "editor.tabSize": 2,
     "yaml.schemas": {
         "Kubernetes configuration": "**/k*/**.yml",
+        "https://json.schemastore.org/github-workflow": [
+            ".github/worflows/*.yml",
+            ".github/worflows/*.yaml"
+        ],
+        "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": [
+            "files/*.yml",
+            "!roles/traefik/files/traefik.yml",
+            "!roles/traefik/files/file-provider.yml"
+        ],
         "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json": [
             "roles/**/tasks/*.yml",
             "roles/**/tasks/*.yaml"
@@ -10,15 +19,13 @@
             "run.yml",
             "run.yaml"
         ],
-        "https://json.schemastore.org/github-workflow": [
-            ".github/worflows/*.yml",
-            ".github/worflows/*.yaml"
-        ],
-        "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": [
-            "files/*.yml",
-        ],
-        "https://json.schemastore.org/traefik-v2-file-provider.json": "roles/traefik/files/file-provider.yml",
-        "https://json.schemastore.org/traefik-v2.json": "roles/traefik/files/traefik.yml"
+        "https://json.schemastore.org/traefik-v3-file-provider.json": "roles/traefik/files/file-provider.yml",
+        "https://json.schemastore.org/traefik-v3.json": [
+            "roles/traefik/files/traefik.yml"
+        ]
     },
-    "ansible.python.activationScript": "/home/roxedus/.venvs/botbox/bin/activate"
+    "ansible.python.activationScript": "/home/roxedus/.venvs/botbox/bin/activate",
+    "cSpell.enabledFileTypes": {
+        "yaml": false
+    }
 }

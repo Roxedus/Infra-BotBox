@@ -3,9 +3,6 @@
 
 # accessLog: {}
 
-core:
-  defaultRuleSyntax: v2
-
 entryPoints:
   web:
     address: :80
@@ -44,7 +41,7 @@ entryPoints:
       middlewares:
         - gzip@file
       tls: &TLS
-        certresolver: le
+        certResolver: le
         domains:
           - main: "{{ site_domain }}"
             sans:
@@ -69,7 +66,8 @@ certificatesResolvers:
       storage: /etc/traefik/acme.json
       dnsChallenge:
         provider: cloudflare
-        delayBeforeCheck: 0
+        propagation:
+          delayBeforeChecks: 0
         resolvers:
           - 1.1.1.1:53
           - 1.0.0.1:53
